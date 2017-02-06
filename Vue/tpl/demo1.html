@@ -126,6 +126,21 @@ console.log(vm.$el === document.getElementById('app-8'))
 vm.$watch('a',function(newVal,oldVal){
 	console.log(oldVal)
 })
+var  vm2 = new Vue({
+	data:{
+		a:1
+	},
+	created:function(){ //在vue实例创建后调用，还有其它的 mounted,updated,destroyed钩子，this指向调用它的vue实例
+		console.log(this.a)
+	}
+})
+
+//===插值===
+	//1.一次性插入值: <span v-once>{{msg}}</span>
+	//2.输出真正的 HTML, 数据绑定会被忽略: <div v-html="rawHtml">{{htmlMsg}}</div>
+	//注意：动态渲染html,容易导致xss攻击，不要对用户提供内容插值
+
+
 </script>
 </body>
 </html>
