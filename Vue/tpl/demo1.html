@@ -123,6 +123,9 @@ var vm = new Vue({
 console.log(vm)
 console.log(vm.$data === data)
 console.log(vm.$el === document.getElementById('app-8'))
+vm.$watch('a',function(newVal,oldVal){
+	console.log(oldVal)
+})
 </script>
 </body>
 </html>
