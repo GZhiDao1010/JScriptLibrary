@@ -1,0 +1,95 @@
+//禁用移动端的选择高亮显示
+body{
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+//css设置背景全屏
+html{
+    background: url() no-repeat center center fixed;
+    background-size: cover;
+
+    //禁止 iOS 弹出各种操作窗口
+    -webkit-touch-callout:none
+    //禁止用户选中文字
+    -webkit-user-select:none
+    //input 元素输入时出现的怪异情况
+    -webkit-user-modify: read-write-plaintext-only
+    //消除 transition 闪屏
+    -webkit-transform-style: preserve-3d;
+    /*设置内嵌的元素在 3D 空间如何呈现：保留 3D*/
+    -webkit-backface-visibility: hidden;
+    /*（设置进行转换的元素的背面在面对用户时是否可见：隐藏）*/
+    //横竖屏会出现字体加粗不一致等
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+//字体设置
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif,Helvetica;
+
+}
+//不让 Android 手机识别邮箱
+<meta content="email=no" name="format-detection" />
+//禁止 iOS 识别长串数字为电话
+<meta content="telephone=no" name="format-detection" />
+
+//部分机型存在type为search的input，自带close按钮样式修改方法
+#Search::-webkit-search-cancel-button{
+    display: none;
+}
+
+.public{
+    //首字突出显示
+    div.letter::first-letter{
+        float: left;
+        color:#000;
+        font-size:3em;
+        margin:5px 0 0 5px;
+    }
+    //隔行变色
+    table tr:nth-child(even){
+        background-color:#ccc;
+    }
+    table tr:nth-child(odd){
+        background-color:#eee;
+    }
+    //CSS 实现类似原生效果的 1px 边框
+    .border-1px {
+    position: relative;
+    }
+    .border-1px:after {
+        position: absolute;
+        content: '';
+        top: -50%;
+        bottom: -50%;
+        left: -50%;
+        right: -50%;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+        border-top: 1px solid #666;
+        border-bottom: 1px solid #666;
+    }
+
+
+    //消除 IE10 里面的那个叉号
+    input:-ms-clear{display:none;}
+
+
+    //清除输入框内阴影
+    input,
+    textarea {
+        /* 方法1: 去掉边框 */
+        border: 0;
+
+        /* 方法2: 边框色透明 */
+        border-color: transparent;
+
+        /* 方法3: 重置输入框默认外观 */
+        -webkit-appearance: none;
+        appearance: none;
+    }
+}

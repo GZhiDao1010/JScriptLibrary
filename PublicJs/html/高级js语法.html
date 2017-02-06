@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>高级js语法</title>
+</head>
+<body>
+1213333
+	<script>
+		//使用Object.assign设置默认对象
+		var menuConfig = {
+				title:'默认标题111',
+				button:'默认button'
+		};
+		function creatMenu(config){
+			config = Object.assign({
+				title:'',
+				cancle:'blue'
+			},config);
+			console.log(config);
+		};
+		creatMenu(menuConfig);
+		//让对象拥有私有成员
+		var Employee = (function(){
+			function Employee(name){
+				this.getName = function(){
+					return name;
+				};
+			}
+			return Employee;
+		}());
+		var employee = new Employee('小强');
+		console.log(employee.getName())
+		//****JavaScript函数式编程***
+		//1.无副作用
+		const x=1;
+		const fn = function(y){
+			return x+y;
+		}
+		console.log(fn(2)) //3
+		console.log(x);//1
+		//2.不可变数据
+		var g = [1,2],g2;
+		g2 = g.concat([3])
+		console.log(g2)
+		console.log(g);
+		var obj ={a:1}
+		var newObj = Object.assign(obj,{},{b:321});
+		console.log(newObj)
+		//3.纯函数的例子
+		function reducer(state){
+			return [{
+				id:3,
+				text:'text'
+			},
+			...state
+			];
+		}
+		var state2 = [{
+        	  id:2,
+        	  text:'text2'
+          },{
+        	  id:3,
+        	  text:'text3'
+          }];
+		console.log(reducer(state2)); //[Object, Object, Object]
+		console.log(state2);
+		//4.函数组合
+		function add(x){
+			return ++x;
+		};
+		function square(x){
+			return x*x;
+		};
+		function compose(x,y){
+			return function(x){
+				return g(f(x));
+			};
+		};
+		var addThenSquare = compose(add,square);
+		var squareThenAdd = compose(square,add);
+		console.log(addThenSquare);
+		console.log(squareThenAdd);
+		//5.多参函数
+		function add(x,y){
+			return x+y;
+		};
+		//6.单参函数--柯里化函数
+		function add2(x){
+			return function(y){
+				return x + y;
+			};
+		};
+		var added = add2(1);
+		console.log(added);
+		var added2 = added(2);
+		console.log(added2);
+		//如何实现一个 LazyMan(典型的JavaScript流程控制)?
+		//关键是如何实现任务的顺序执行
+		function _LazyMan(name){
+			this.tasks = [];
+			var self = this;
+			var fn = (function(n){
+				var name = n;
+				return function(){
+					console.log("Hi This is " +name +"!");
+					self.next();
+				}
+			})(name);
+			this.tasks.push(fn);
+			setTimeout(function(){
+				self.next();
+			},0);//在下一个事件循环启动任务
+		}
+		/* 事件调度函数 */
+		_LazyMan.prototype.next = function(){
+			var fn = this.tasks.shift();
+			fn && fn();
+		}
+		_LazyMan.prototype.eat = function(name){
+			var self =this;
+			var fn =(function(name){
+				return function(){
+					console.log('eat' + name + "~~");
+					self.next();
+				}
+			})(name);
+			this.tasks.push(fn);
+			return this;//实现链式调用
+		}
+		_LazyMan.prototype.sleep = function(time){
+			var self = this;
+			var fn = (function(time){
+				return function(){
+					setTimeout(function(){
+						console.log('wake up after' + time + 's!');
+						self.next();
+					},time*1000)
+				}
+			})(time);
+			this.tasks.push(fn);
+			return this;
+		}
+		_LazyMan.prototype.sleepFirst = function(time){
+			var self = this;
+			var fn = (function(time){
+				return function(){
+					setTimeout(function(){
+						console.log('wake up after' + time + 's!');
+					},time * 1000)
+				}
+			})(time);
+			this.tasks.unshift(fn);
+			return this;
+		}
+		/* 封装 */
+		function LazyMan(name){
+			return new _LazyMan(name);
+		}
+		LazyMan('xiaoqiang').sleep(3).eat('dinner').eat('supper');
+		
+		function webpsupport(a) {
+		    var c = window.localStorage;
+		    if (typeof a != "function") {
+		        a = function() {}
+		    }
+		    if (c! = undefined && c._tmtwebp != undefined && c._tmtwebp == 0) {
+		        a();
+		        return false
+		    } else {
+		        if (c != undefined && c._tmtwebp! = undefined && c._tmtwebp == 1) {
+		            a(1);
+		            return true
+		        } else {
+		            var f = new Image();
+		            f.onload = f.onerror = function() {
+		                if(f.height != 2) {
+		                    if (c != undefined) {
+		                        c._tmtwebp = 0
+		                    }
+		                    a();
+		                    return false
+		                } else {
+		                    if (c != undefined) {
+		                        c._tmtwebp = 1
+		                    }
+		                    a(1);
+		                    return true
+		                }
+		            };
+		            f.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6W
+		            WgAA / veff / 0 PP8bA 
+		            //LwYAAA"
+		            }
+		        }
+		    };
+            ;(function(){
+            	function b(t){
+            		var f=document.getElementsByTagName("link");
+		            for (var e = 0, d = f.length; e < d; e++) {
+		                if (t) {
+		                    f[e].href = f[e].getAttribute("data-href").replace(".css", ".webp.css");
+		                } else {
+		                    f[e].href = f[e].getAttribute("data-href")
+		                }
+		            }
+		        }
+		        webpsupport(b);
+		    })(); 
+			
+		//矩阵的转置
+		var arr = [ // 定义一个矩阵（二维数据）
+		    [1, 2, 3, 4],
+		    [5, 6, 6, 6],
+		    [7, 6, 7, 8],
+		    [8, 5, 3, 3]
+		];
+		function changeArr(arr) { // 矩阵转置函数
+		    var c;
+		    for (var i = 1; i < arr.length; i++) {
+		        for (var j = 0; j < i; j++) {
+		            c = arr[i][j];
+		            arr[i][j] = arr[j][i];
+		            arr[j][i] = c;
+		        }
+		    }
+		}
+		changeArr(arr);
+		console.table(arr);
+		//冒泡排序方法
+		// 第一轮是对n-1的位置定位
+		// 第二轮是 每一个位置的数的 确定
+		var arr = [1, 4, 5, 6, 99, 111, 112, 113, 133],
+		    temp = 0,
+		    flag = false;
+		for (var i = 0; i < arr.length - 1; i++) {
+		    document.writeln('come');
+		    for (var j = 0; j < arr.length - 1 - i; j++) {
+		        if (arr[j] > arr[j + 1]) {
+		            temp = arr[j];
+		            arr[j] = arr[j + 1];
+		            arr[j + 1] = temp;
+		            flag = true;
+		        }
+		    }
+		    if (flag) {
+		        flag = false;
+		    } else {
+		        break;
+		    }
+		}
+		for (var i = 0; i < arr.length; i++) {
+		    document.writeln(arr[i]);
+		};
+		//二分查找法
+		var arr = [41, 55, 76, 87, 88, 99, 123, 432, 546, 577, 688, 786];
+		function twoFind(arr, wantVal, leftIndex, rightIndex) {
+		    if (leftIndex > rightIndex) {
+		        document.writeln('SORRY: 找不到 ' + wantVal + ' ！');
+		        return;
+		    }
+		    var minIndex = Math.floor((leftIndex + rightIndex) / 2);
+		    if (arr[minIndex] > wantVal) {
+		        twoFind(arr, wantVal, leftIndex, minIndex - 1);
+		    } else if (arr[minIndex] < wantVal) {
+		        twoFind(arr, wantVal, minIndex + 1, rightIndex);
+		    } else {
+		        document.writeln('找到了 ' + wantVal + ' ,下表为' + minIndex);
+		    }
+		}
+		twoFind(arr, 9, 0, arr.length - 1);
+		
+	</script>
+</body>
+</html>
