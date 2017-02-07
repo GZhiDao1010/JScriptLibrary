@@ -64,8 +64,59 @@
 <div id="app-15" v-bind:class="{ active : isActive , 'text-danger' : hasText}">
 	绑定HTML Class
 </div>
-
 <div id="app-16" v-bind:class="classObject">直接绑定数据里的一个对象</div>
+
+<div id="app-17" v-bind:style="styleObject">绑定行内样式</div>
+
+<div id="app-18">
+<h1>使用-key-控制元素的可重用</h1>
+<template v-if="loginType === 'username'">
+	<label>Username</label>
+	<input placeholder="enter you username" v-model="inputMsg" key="username-input">
+</template>
+<template v-else>
+	<label>Email</label>
+	<input placeholder="enter you email address" v-model="inputMsg" key="email-input">
+</template>
+
+<button v-on:click="toggleType">切换登录方式</button>
+<button v-on:click="submit">登录</button>
+
+</div>
+
+<div>
+	<h1>简单的 todo list 完整的</h1>
+	<div id="app-19">
+		<input v-model="newTodoText" v-on:keyup.enter="addNewTodo"placeholder="add a todo">
+		<ul>
+			<li is="todo-item2"	v-for="(todo,index) in todos" v-bind:title="todo" v-on:remove="todos.splice(index,1)"></li>
+		</ul>
+	</div>
+</div>
+
+<div id="app-20">
+<h1>显示过滤-排序结果</h1>
+<ul>
+<li v-for="n in evenNumbers">{{n}}</li>
+</ul>
+</div>
+
+<div id="app-21">
+	<button v-on:click="counter += 1">加1</button>
+	<input v-model="counter" />
+	<div>{{counter}}</div>
+	<button v-on:click=" if(counter > 0) counter -= 1">减1</button>
+</div>
+
+<div id="app-22">
+<h1>访问原生 DOM 事件</h1>
+<button v-on:click="warn('form',$event)">访问原生 DOM 事件</button>
+</div>
+
+<div id="app-23">
+<h1>局部注册</h1>
+<my-component></my-component>
+</div>
 <script type="text/javascript" src="../lib/vue.js"></script>
 <script src="../lib/axios.min.js"></script>
 <script src="../lib/lodash.core.min.js"></script>
@@ -276,6 +327,118 @@ var app16 = new Vue({
 			'active2':false,
 			'active3':true
 		}
+	}
+})
+var app17 = new Vue({
+	el:'#app-17',
+	data:{
+		styleObject:{
+			color:'red',
+			fontSize:'20px',
+			transition: 'inherit'
+		}
+	}
+})
+function test(value){
+	if( value.length == 0 ) return true
+}
+var app18 = new Vue({
+	el:'#app-18',
+	data:{
+		inputMsg:'',
+		loginType:'username',
+		flag:true
+	},
+	methods:{
+		toggleType:function(e){
+			
+			console.log(e)
+			if(this.flag){
+				this.loginType="emal"
+				this.flag = false
+			}else{
+				this.loginType="username"
+				this.flag = true
+			}
+			this.inputMsg='';
+		},
+		submit:function(){
+			console.log(this.inputMsg)
+			 //默认为用户登录
+			var bean ={
+				type:this.flag ? '0':'1',
+				msg:this.inputMsg
+			}
+			console.log(bean)
+			test(this.inputMsg); //执行window的test方法
+			
+		},
+		test:function(value){
+			if( value.length == 0 ) return;
+		}
+	}
+})
+Vue.component('todo-item2', {
+	  template: '\
+	    <li>\
+	      {{ title }}\
+	      <button v-on:click="$emit(\'remove\')">X</button>\
+	    </li>\
+	  ',
+	  props: ['title']
+	})
+new Vue({
+	el:'#app-19',
+	data:{
+		newTodoText:'',
+		todos:[
+			'Do the dishes',
+			'Take out the trash',
+			'Mow the lawn'
+		]
+	},
+	methods:{
+		addNewTodo:function(){
+			this.todos.push(this.newTodoText)
+			this.newTodoText = ''
+		}
+	}
+})
+var app20 = new Vue({
+	el:'#app-20',
+	data:{
+		numbers:[1,2,3,4,5,6,7]
+	},
+	computed:{
+		evenNumbers:function(){
+			return this.numbers.filter(function(number){
+				return number % 2 === 0
+			})
+		}
+	}
+})
+var app21 = new Vue({
+	el:'#app-21',
+	data:{
+		counter:0
+	}
+})
+var app22 = new Vue({
+	el:'#app-22',
+	methods:{
+		warn:function(message,event){
+			console.log(event)
+		}
+	}
+})
+var Child ={
+	template:'<h3>我的局部注册进来的</h3>'
+}
+
+var app23 = new Vue({
+	el:'#app-23',
+	components:{
+		'my-component':Child
 	}
 })
 </script>
