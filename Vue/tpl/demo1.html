@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>Vue实例</title>
+<style type="text/css">
+*{margin:0;padding: 0}
+</style>
 </head>
 <body>
 <div id="app">{{message}}</div>
@@ -37,7 +40,35 @@
 	</ol>
 </div>
 <div id="app-8"></div>
+<a id="app-9" v-bind:href="url">跳转链接本地文件</a>
+<br>
+<br>
+<br>
+<br>
+<a id="app-10" v-on:click="dosomething" data-id="10">点击事件</a>
+<a id="app-11" v-on:submit.prevent="onSubmit">修饰符</a>
+<div v-bind:id="rawId | formatId">过滤器</div>
+<div id="app-12">
+	<p>{{message}}</p>
+	<p>{{ addMessage }}</p>
+	<p>{{ addMessage2() }}</p>
+</div>
+
+
+<div id="app-13">
+	<p>ask a yes/no question
+		<input v-model="question" />
+	</p>
+	<p>{{answer}}</p>
+</div>
+<div id="app-15" v-bind:class="{ active : isActive , 'text-danger' : hasText}">
+	绑定HTML Class
+</div>
+
+<div id="app-16" v-bind:class="classObject">直接绑定数据里的一个对象</div>
 <script type="text/javascript" src="../lib/vue.js"></script>
+<script src="../lib/axios.min.js"></script>
+<script src="../lib/lodash.core.min.js"></script>
 <script type="text/javascript">
 var app = new Vue({
 	el:'#app',
@@ -140,7 +171,113 @@ var  vm2 = new Vue({
 	//2.输出真正的 HTML, 数据绑定会被忽略: <div v-html="rawHtml">{{htmlMsg}}</div>
 	//注意：动态渲染html,容易导致xss攻击，不要对用户提供内容插值
 
+var app9 = new Vue({
+	el:'#app-9',
+	data:{
+		url:'demo2.html'
+	}
+})
+var app10 = new Vue({
+	el:'#app-10',
+	data:{
+		dosomething:function(e){
+			console.log(e)
+			console.log(e.target.dataset.id)
+		}
+	}
+})
+var app11 = new Vue({
+	el:'#app-11',
+	data:{
+		onSubmit:function(e){
+			console.log(e)
+		}
+	}
+})
+new Vue({
+	filters:{
+		capitalize:function(value){
+			console.log(value)
+			if(!value) return ''
+			value = value.toString()
+			return value.charAt(0).toUpperCase() + value.slice(1)
+		}
+	}
+})
+	//计算属性
+var app12 = new Vue({
+	el:'#app-12',
+	data:{
+		message:'我的原配'
+	},
+	computed:{ //是基于它的依赖缓存
+		addMessage:function(){
+			return this.message + '++computed++追加的小三.....' + Date.now()
+		}
+	},
+	methods:{ //重新渲染的时候，method 调用总会执行函数
+		addMessage2:function(){
+			return this.message + '++menths++我追加的小四.....' + Date.now()
+		}
+	}
+})
+	
+	//观察 Vue 实例上的数据变动 $watch  跟计算属性对比 是重复的
+//观察Watchers --- 要在数据变化响应时，执行异步操作或开销较大的操作
+var app13 = new Vue({
+	el:'#app-13',
+	data:{
+		question:'',
+		answer:'i cannot get you answer until you ask a question'
+	},
+	watch:{
+		//如果question发生变化就会执行此方法
+		question: function (newQuestion) {
+	      this.answer = 'Waiting for you to stop typing...'
+	      this.getAnswer()
+	    }
+	},
+	mothods:{
+		//_.debounce是通过lodash限制频率的函数 参考：https://lodash.com/docs#debounce
+		getAnswer:_.debounce(
+			function () {
+		        var vm = this
+		        if (this.question.indexOf('?') === -1) {
+		          vm.answer = 'Questions usually contain a question mark. ;-)'
+		          return
+		        }
+		        vm.answer = 'Thinking...'
+		        axios.get('https://yesno.wtf/api')
+		          .then(function (response) {
+		            vm.answer = _.capitalize(response.data.answer)
+		          })
+		          .catch(function (error) {
+		            vm.answer = 'Error! Could not reach the API. ' + error
+		          })
+		      },
+		      // 这是我们为用户停止输入等待的毫秒数
+		      500
+		)
+	}
+})
 
+var app15 = new Vue({
+	el:'#app-15',
+	data:{
+		isActive:true,
+		hasText:false
+	}
+})
+var app16 = new Vue({
+	el:'#app-16',
+	data:{
+		classObject:{
+			active:true,
+			'active2':false,
+			'active3':true
+		}
+	}
+})
 </script>
 </body>
 </html>
