@@ -119,23 +119,10 @@
 </div>
 
 <div id="app-24">
-  <currency-input 
-    label="Price" 
-    v-model="price"
-  ></currency-input>
-  <currency-input 
-    label="Shipping" 
-    v-model="shipping"
-  ></currency-input>
-  <currency-input 
-    label="Handling" 
-    v-model="handling"
-  ></currency-input>
-  <currency-input 
-    label="Discount" 
-    v-model="discount"
-  ></currency-input>
-  
+  <currency-input label="Price" v-model="price"></currency-input>
+  <currency-input label="Shipping" v-model="shipping"></currency-input>
+  <currency-input label="Handling" v-model="handling"></currency-input>
+  <currency-input label="Discount" v-model="discount"></currency-input>
   <p>Total: ${{ total }}</p>
 </div>
 
@@ -465,9 +452,8 @@ var app23 = new Vue({
 		'my-component':Child
 	}
 })
-
-Vue.component('currency-input', {
-	  template: '\
+var currencyInputChild = {
+	template: '\
 	    <div>\
 	      <label v-if="label">{{ label }}</label>\
 	      $\
@@ -480,59 +466,60 @@ Vue.component('currency-input', {
 	      >\
 	    </div>\
 	  ',
-	  props: {
-	    value: {
-	      type: Number,
-	      default: 0
-	    },
-	    label: {
-	      type: String,
-	      default: ''
-	    }
-	  },
-	  mounted: function () {
-	    this.formatValue()
-	  },
-	  methods: {
-	    updateValue: function (value) {
+	props:{
+		value:{
+			type:Number,
+			default:0
+		},
+		label:{
+			type:String,
+			default:''
+		}
+	},
+	mounted:function(){
+		this.formatValue()
+	},
+	methods:{
+		updateValue: function (value) {
 	      var result = currencyValidator.parse(value, this.value)
 	      if (result.warning) {
 	        this.$refs.input.value = result.value
 	      }
 	      this.$emit('input', result.value)
 	    },
-	    formatValue: function () {
-	      this.$refs.input.value = currencyValidator.format(this.value)
-	    },
-	    selectAll: function (event) {
-	      // Workaround for Safari bug
-	      // http://stackoverflow.com/questions/1269722/selecting-text-on-focus-using-jquery-not-working-in-safari-and-chrome
-	      setTimeout(function () {
-	      	event.target.select()
-	      }, 0)
-	    }
-	  }
-	})
+		formatValue:function(){
+			this.$refs.input.value = currencyValidator.format(this.value)
+		},
+		selectAll:function(event){
+			setTimeout(function(){
+				event.target.select()
+			},0)
+		}
+	}
+};
+//引入currency-validator.js
+var app24 = new Vue({
+	el:'#app-24',
+	data:{
+		price:0,
+		shipping:0,
+		handling:0,
+		discount:0
+	},
+	components:{
+		'currency-input':currencyInputChild
+	},
+	computed:{
+		total:function(){
+			return ((
+				this.price*100 + this.shipping*100 + this.handling*100 - this.discount*100
+			) / 100).toFixed(2)
+		}
+	}
+})
 
-	new Vue({
-	  el: '#app-24',
-	  data: {
-	    price: 0,
-	    shipping: 0,
-	    handling: 0,
-	    discount: 0
-	  },
-	  computed: {
-	    total: function () {
-	      return ((
-	        this.price * 100 + 
-	        this.shipping * 100 + 
-	        this.handling * 100 - 
-	        this.discount * 100
-	      ) / 100).toFixed(2)
-	    }
-	  }
-	})
+
+	
 
 </script>
 </body>
