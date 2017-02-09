@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <meta name="format-detection" content="telephone=no">
+    <style>
+    .gzd_tab_bd {
+	  box-sizing: border-box;
+	  height: 100%;
+	  padding-bottom: 55px;
+	  overflow: auto;
+	  -webkit-overflow-scrolling: touch;
+	}
+	.gzd_tab_bd_item {
+	  display: none;
+	}
+	.gzd_tab_bd_item_active {
+	  display: block;
+	}
+	.gzd_tabbar {
+	  display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: flex;
+	  position: fixed;
+	  z-index: 2;
+	  left: 0;
+	  bottom: 0;
+	  width: 100%;
+	  background-color: #fff;
+	}
+	.gzd_tabbar:before {
+	  content: " ";
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  width: 100%;
+	  height: 1px;
+	  border-top: 1px solid #e0dfdf;
+	  color: #696969;
+	  transform-origin: 0 0;
+	  transform: scaley(0.5);
+	}
+	.gzd_tabbar_item {
+	  display: block;
+	  flex: 1;
+	  padding: 7px 0 0;
+	  -webkit-tap-highlight-color: transparent;
+	  text-decoration: none;
+	}
+	.gzd_tabbar_item.gzd_bar_item_on .gzd_tabbar_label {
+	  color: #09BB07;
+	}
+	.gzd_tabbar_item .e4393c {
+	  color: #8557fb;
+	}
+	.gzd_tabbar_icon {
+	  margin: 0 auto;
+	  width: 24px;
+	  height: 24px;
+	}
+	.gzd_tabbar_icon img {
+	  display: block;
+	  width: 100%;
+	  height: 100%;
+	}
+	.gzd_tabbar_icon  + .gzd_tabbar_label {
+	  margin-top: 5px;
+	  margin-bottom: 3px;
+	}
+	.gzd_tabbar_label {
+	  text-align: center;
+	  color: #333;
+	  font-size: 12px;
+	}
+    </style>
+</head>
+
+<body>
+    <section class="gzd_tabbar" id="bottomMenuBar">
+    	<section class="gzd_tabbar_item" @click="toLinkMenu" v-for="(item,index) in items" :data-index="index">
+            <section class="gzd_tabbar_icon"><img :data-index="index" :src="itemsBg[index] ? route + item.icon2:route + item.icon1" :alt="index"></section>
+            <p :data-index="index" class="gzd_tabbar_label" :style="itemsBg[index] ? 'color:#006633':'color:#999'">{{item.text}}</p>
+        </section>
+    </section>
+   <script src="../lib/vue.js"></script>
+   <script>
+   var bottomMenuBar = new Vue({
+	   el:'#bottomMenuBar',
+	   data:function(){
+		   return{
+			   route:'../images/',
+			   itemsBg:[true,false,false,false],
+			   items:[
+			    	{icon1:'home.png',icon2:'home2.png',text:'预约'},
+			    	{icon1:'priceList.png',icon2:'priceList2.png',text:'价目表'},
+			    	{icon1:'checkOut.png',icon2:'checkOut2.png',text:'结账'},
+			    	{icon1:'personal.png',icon2:'personal2.png',text:'我的'}
+			    ]
+		   }
+	   },
+	   methods:{
+		   toLinkMenu:function(event){
+			  	const num  = event.target.dataset.index;
+			  	var itemsBg = this.itemsBg;
+			  	for(let i=0;i<itemsBg.length;i++){
+			  		if(parseInt(num) === parseInt(i)){
+			  			itemsBg[i] = true
+			  		}else{
+			  			itemsBg[i] = false;
+			  		}
+			  	}
+			  	//this.itemsBg = Object.assign(新添加内容的类型, 要替换的内容, 新添加的内容);
+			  	this.itemsBg = Object.assign([], this.itemsBg, itemsBg);
+		   }
+	   }
+   })
+   </script>
+</body>
+
+</html>
