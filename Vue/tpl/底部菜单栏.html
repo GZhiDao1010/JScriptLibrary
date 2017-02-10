@@ -9,7 +9,9 @@
     <meta name="description" content="" />
     <meta name="apple-mobile-web-app-capable" content="no" />
     <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css" />
     <style>
+    
     .gzd_tab_bd {
 	  box-sizing: border-box;
 	  height: 100%;
@@ -78,29 +80,64 @@
 	  color: #333;
 	  font-size: 12px;
 	}
+	#container{
+		box-sizing:border-box;
+		height:100%;
+		width:100%;
+		position:absolute;
+		top:0;
+		left:0;
+	}
+	.paddingBottom{
+		background-color:red;
+		border:1px solid green;
+		padding-bottom:60px;
+	}
+	
+	.router-link-active .gzd_tabbar_label{
+		color:#006633;
+	}
     </style>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-routerv2.2.0.js"></script>
 </head>
 
 <body>
-    <section class="gzd_tabbar" id="bottomMenuBar">
-    	<section class="gzd_tabbar_item" @click="toLinkMenu" v-for="(item,index) in items" :data-index="index">
-            <section class="gzd_tabbar_icon"><img :data-index="index" :src="itemsBg[index] ? route + item.icon2:route + item.icon1" :alt="index"></section>
-            <p :data-index="index" class="gzd_tabbar_label" :style="itemsBg[index] ? 'color:#006633':'color:#999'">{{item.text}}</p>
-        </section>
-    </section>
-   <script src="../lib/vue.js"></script>
+	<div id="bottomMenuBarBox">
+	    <section class="gzd_tabbar" id="bottomMenuBar">
+	    	<router-link class="gzd_tabbar_item" @click="toLinkMenu" v-for="(item,index) in items" :data-index="index" :to="item.toLink"  >
+	            <section class="gzd_tabbar_icon"><img :data-index="index" :src="itemsBg[index] ? route + item.icon2:route + item.icon1" :alt="index"></section>
+	            <p :data-index="index" class="gzd_tabbar_label" >{{item.text}}</p>
+	            <!-- :style="itemsBg[index] ? 'color:#006633':'color:#999'" -->
+	        </router-link>
+	    </section>
+	   	<router-view id="container"></router-view>
+    </div>
    <script>
-   var bottomMenuBar = new Vue({
-	   el:'#bottomMenuBar',
+   const Home = { template:'<div><div class="paddingBottom">Home</div></div>' }
+   const PriceList = { template:'<div><div class="paddingBottom">PriceList</div></div>' }
+   const CheckOut = { template:'<div><div class="paddingBottom">CheckOut</div></div>' }
+   const Personal = { template:'<div><div class="paddingBottom">Personal</div></div>' }
+   const routes = [
+        {path:'/home',component:Home},
+        {path:'/priceList',component:PriceList},
+        {path:'/checkOut',component:CheckOut},
+        {path:'/personal',component:Personal}
+   ]
+   const router = new VueRouter({
+	   routes:routes
+   })
+   const bottomMenuBar = new Vue({
+	   el:'#bottomMenuBarBox',
 	   data:function(){
 		   return{
 			   route:'../images/',
 			   itemsBg:[true,false,false,false],
 			   items:[
-			    	{icon1:'home.png',icon2:'home2.png',text:'预约'},
-			    	{icon1:'priceList.png',icon2:'priceList2.png',text:'价目表'},
-			    	{icon1:'checkOut.png',icon2:'checkOut2.png',text:'结账'},
-			    	{icon1:'personal.png',icon2:'personal2.png',text:'我的'}
+			    	{icon1:'home.png',icon2:'home2.png',text:'预约',toLink:'/home'},
+			    	{icon1:'priceList.png',icon2:'priceList2.png',text:'价目表',toLink:'/priceList'},
+			    	{icon1:'checkOut.png',icon2:'checkOut2.png',text:'结账',toLink:'/checkOut'},
+			    	{icon1:'personal.png',icon2:'personal2.png',text:'我的',toLink:'/personal'}
 			    ]
 		   }
 	   },
@@ -118,8 +155,9 @@
 			  	//this.itemsBg = Object.assign(新添加内容的类型, 要替换的内容, 新添加的内容);
 			  	this.itemsBg = Object.assign([], this.itemsBg, itemsBg);
 		   }
-	   }
-   })
+	   },
+	   router:router
+   }).$mount()
    </script>
 </body>
 
