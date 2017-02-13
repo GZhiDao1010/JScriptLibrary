@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <meta name="format-detection" content="telephone=no">
+    <style>
+    
+    .gzd_tab_bd {
+	  box-sizing: border-box;
+	  height: 100%;
+	  padding-bottom: 55px;
+	  overflow: auto;
+	  -webkit-overflow-scrolling: touch;
+	}
+	.gzd_tab_bd_item {
+	  display: none;
+	}
+	.gzd_tab_bd_item_active {
+	  display: block;
+	}
+	.gzd_tabbar {
+	  display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: flex;
+	  position: fixed;
+	  z-index: 2;
+	  left: 0;
+	  bottom: 0;
+	  width: 100%;
+	  background-color: #fff;
+	}
+	.gzd_tabbar:before {
+	  content: " ";
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  width: 100%;
+	  height: 1px;
+	  border-top: 1px solid #e0dfdf;
+	  color: #696969;
+	  transform-origin: 0 0;
+	  transform: scaley(0.5);
+	}
+	.gzd_tabbar_item {
+	  display: block;
+	  flex: 1;
+	  padding: 7px 0 0;
+	  -webkit-tap-highlight-color: transparent;
+	  text-decoration: none;
+	}
+	.gzd_tabbar_item.gzd_bar_item_on .gzd_tabbar_label {
+	  color: #09BB07;
+	}
+	.gzd_tabbar_item .e4393c {
+	  color: #8557fb;
+	}
+	.gzd_tabbar_icon {
+	  margin: 0 auto;
+	  width: 24px;
+	  height: 24px;
+	}
+	.gzd_tabbar_icon img {
+	  display: block;
+	  width: 100%;
+	  height: 100%;
+	}
+	.gzd_tabbar_icon  + .gzd_tabbar_label {
+	  margin-top: 5px;
+	  margin-bottom: 3px;
+	}
+	.gzd_tabbar_label {
+	  text-align: center;
+	  color: #333;
+	  font-size: 12px;
+	}
+	#container{
+		box-sizing:border-box;
+		height:100%;
+		width:100%;
+		position:absolute;
+		top:0;
+		left:0;
+	}
+	.paddingBottom{
+		background-color:red;
+		border:1px solid green;
+		padding-bottom:60px;
+	}
+	
+	.router-link-active .gzd_tabbar_label{
+		color:#006633;
+	}
+    </style>
+    <script src="../../lib/vue.js"></script>
+    <script src="../../lib/vuex2.1.2.js"></script>
+    <script src="../../lib/vue-routerv2.2.0.js"></script>
+</head>
+
+<body>
+	<div id="bottomMenuBarBox" class="gzd_tabbar">
+		<div v-for="(menu,index) in menus" @click="updateHead(menu)"  class="gzd_tabbar_item">
+			<section class="gzd_tabbar_icon">
+	        <img :data-index="index" :src="itemsBg[index] ? route + menu.icon2:route + menu.icon1" :alt="index"></section>
+	        <p :data-index="index" class="gzd_tabbar_label" >{{menu.text}}</p>
+		</div>		
+  </div>
+    
+   <script>
+   const obj = [ //id数组
+    	         {id:1},
+    	         {id:2},
+    	         {id:3},
+    	         {id:4}
+       ]
+   const bottomMenuBar = new Vue({
+ 		el:'#bottomMenuBarBox',
+ 		data:{
+ 			route:'../images/',
+ 		    itemsBg:[true,false,false,false],
+ 			menus:[
+				{icon1:'home.png',icon2:'home2.png',text:'预约',toLink:'/home/'+obj[0].id+''},
+				{icon1:'priceList.png',icon2:'priceList2.png',text:'价目表',toLink:'/priceList/'+obj[1].id+''},
+				{icon1:'checkOut.png',icon2:'checkOut2.png',text:'结账',toLink:'/checkOut/'+obj[2].id+''},
+				{icon1:'personal.png',icon2:'personal2.png',text:'我的',toLink:'/personal/'+obj[3].id+''}
+ 			 ]
+ 		},
+ 		methods:{
+ 			updateHead:function(obj){
+ 				console.log(obj)
+ 			}
+ 		}
+ 		
+ 	})
+  
+   </script>
+</body>
+
+</html>
