@@ -1,0 +1,253 @@
+/* Import Less files */
+@import "lib-mixins";
+@import "lib-reset";
+
+/* Import lib-rem.less if supportREM opened. */
+@import "lib-rem";
+@import "reset";
+*{padding:0;margin:0;}
+body{
+	font-size:14px;
+}
+.body_bg{
+	background-image:url(../img/bg.png);
+	background-size:100% 100%;
+}
+.music_box{
+	position:absolute;
+	top:20px;
+	left:20px;
+	width:38px;
+	height:38px;
+	border-radius:38px;
+	background-image:url(../img/music.png);
+	background-size:100% 100%;
+}
+.left_timer{
+	background-color:rgba(0,0,0,.5);
+	color:#fff;
+	position:absolute;
+	top:20px;
+	right:0;
+	padding:8px 15px 8px 40px;
+	border-radius:20px 0 0 20px;
+	background-image:url(../img/lock.png);
+	background-size:auto 60%;
+	background-position:12px 7px;
+	background-repeat:no-repeat;
+}
+.bomb_btns_box{
+	position:absolute;
+	right:10px;
+	top:40%;
+	overflow:hidden;
+	width: 38px;
+}
+.bomb_btns_box a{
+	width:38px;
+	height:38px;
+	display:block;
+	border-radius:38px;
+	background-size:100% 100%;
+}
+.bomb_btns_box a:nth-of-type(1){
+	background-image:url(../img/ad.png);
+	margin-bottom:10px;
+}
+.bomb_btns_box a:nth-of-type(2){
+	background-image:url(../img/gift.png);
+}
+.begin_game_box{
+	position:absolute;
+	left:0;
+	bottom:10%;
+	width:100%;
+	overflow:hidden;
+	box-sizing:border-box;
+	text-align:center;
+}
+.round_line{
+	width:150px;
+	height:150px;
+	border-radius:150px;
+	border:1px solid #fff;
+	display:inline-block;
+	box-sizing:border-box;
+}
+.round_line2{
+	width:140px;
+	height:140px;
+	border-radius:140px;
+	margin-top:3px;
+	border:1px solid #fff;
+	display:inline-block;
+	box-sizing:border-box;
+}
+.round_line3{
+	width:130px;
+	height:130px;
+	border-radius:130px;
+	margin-top:4px;
+	border:1px solid #fff;
+	display:inline-block;
+	box-sizing:border-box;
+}
+.round_line4{
+	width:120px;
+	height:120px;
+	border-radius:120px;
+	margin-top:4px;
+	background-color:rgba(255,255,255,.5);
+	display:inline-block;
+	box-sizing:border-box;
+	background-image:url(../img/begin.png);
+	background-size:90% 90%;
+	background-position:50% 50%;
+	background-repeat:no-repeat;
+	position:relative;
+}
+.begin_game_cover{
+	position:absolute;
+	top:0;
+	left:0;
+	width:120px;
+	height:120px;
+	border-radius:120px;
+	background-color:rgba(255,255,255,.3);
+}
+
+
+.popup_box{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,.5);
+	text-align:center;
+	display:none
+	
+}
+.popup_cont_box{
+	padding:30% 8% 0 8%;
+}
+.popup_title_box{
+	background-color:#394c99;
+	color:#fff;
+	position:relative;
+	height:40px;
+	line-height:41px;
+	font-size:15px;
+}
+.popup_close_btn{
+	position:absolute;
+	right:0;
+	padding:0 10px;
+	top:0;
+	font-size:24px;
+	line-height:35px;
+	color:#fff;
+	text-decoration: none;
+}
+.popup_cont{
+	background-color:#fff;
+	color:#999;
+	font-size:15px;
+	min-height:150px;
+	text-align:left;
+	padding:10px 5% 10px 5%;
+	
+}
+.popup_cont_text{
+	white-space: pre-wrap;word-wrap: break-word; 
+}
+.popup_erweima{
+	width:80%;
+	padding:0 7%;
+	padding-top:10px;
+}
+.go_back_box{
+	height: 30px;
+	width:30px;
+	border-radius:30px;
+	background-color:#fff;
+	overflow:hidden;
+	position:relative;
+	float:left;
+	margin:10px 0 0 10px;
+}
+.go_back{
+    display: block;
+    height: 30px;
+    position: absolute;
+    left: 11px;
+    top: 6px;
+    &:before{
+      content: " ";
+      display: inline-block;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      height: .5rem;
+      width: .5rem;
+      top: 0;
+      border-width: .1rem .1rem 0 0;
+      border-color: #f04a4a;
+      border-style: solid;
+      position: relative;
+      -webkit-transform: rotate(225deg);
+      transform: rotate(225deg);
+    }
+}
+.look_phone_card_box{
+	text-align:center;
+	.top{
+		background-image:url(../img/redbg.png);
+		background-position:0 0;
+		background-size:100% 100%;
+		color:#fff;
+		height:150px;
+		position:relative;
+		.title{
+			font-size:26px;
+			padding:65px 0 5px 0;
+		}
+		.red_cur{
+			position:absolute;
+			left:0;
+			bottom:-4px;
+			width:100%;
+			height:30px;
+			
+			background-position:-10px -10px;
+		}
+	}
+	.middle{
+		padding:40px 0 20px 0; 
+		font-size:14px;
+		p{
+			padding-bottom:5px;	
+		}
+		input{
+			display:block;
+			width:100%;
+			margin-bottom:40px;
+			text-align: center;
+			border:0;
+		}
+		button{
+			background-color:#f04a4a;
+			color:#fff;
+			text-align:center;
+			line-height:35px;
+			display:block;font-size:15px;
+			border:0;
+			width:92%;
+			margin:0 4%;
+			border-radius:4px;
+			&:active{
+				background-color:#de2929;
+			}
+		}
+	}
+	.getit{width:100%;}
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/style-index.css" />
+    <style media="screen">
+        h5 {
+            padding: 0;
+            margin: 0
+        }
+    </style>
+</head>
+
+<body>
+    <div class="buy_package" style="padding: 20px 20px 50px 0;">
+        <input type="text" name="cardNum1" class="default_input h28w230" placeholder="请输入手机" data-verify="verify" data-flag="true" data-max="20" data-type="isMobile" />
+        <input type="text" name="cardNum2" class="default_input h28w230" placeholder="请输入正整数" data-verify="verify" data-max="20" data-type="ispositivenum" />
+        <button type="button" class="default_button buleBtn" onclick="save()">保存</button>
+    </div>
+    <script src="../js/Public.js" charset="utf-8"></script>
+    <script>
+        console.time(11);
+        console.log(window.Public);
+        console.timeEnd(11);
+        var fn = function() {
+            var div2 = document.createElement("h5");
+            div2.innerText = '000000000000';
+            document.querySelector('.test').appendChild(div2)
+        };
+        Public.scrollingLoads(fn, '.cont');
+        var save = function() {
+
+            var info = Public.verifyText('.buy_package');
+            console.log(info);
+            if (info) {
+                console.log(123131);
+            }
+
+        }
+    </script>
+</body>
+
+</html>

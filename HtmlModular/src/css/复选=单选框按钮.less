@@ -1,0 +1,204 @@
+.ui-radio {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    overflow: visible;
+    border: 0;
+    background: 0 0;
+    -webkit-appearance: none;
+    outline: 0;
+    vertical-align: middle;
+}
+
+.ui-radio:before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #dfe0e1;
+    border-radius: 20px;
+    background-clip: padding-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.ui-radio:after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #dfe0e1;
+    border-radius: 12px;
+    position: absolute;
+    left: 6px;
+    top: 6px;
+}
+
+.ui-radio:checked:before {
+    border: 2px solid #18b4ed;
+}
+
+.ui-radio:checked:after {
+    background: #18b4ed;
+}
+
+
+.checkBox input {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-rtl-ordering: logical;
+    -webkit-user-select: text;
+    cursor: auto;
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0;
+    font: 13.33px Arial;
+    -webkit-writing-mode: horizontal-tb;
+}
+
+.checkBox .switch {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 52px;
+    height: 32px;
+    border: 1px solid #DFDFDF;
+    outline: 0;
+    border-radius: 16px;
+    box-sizing: border-box;
+    background: #DFDFDF;
+}
+
+.checkBox .switch:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #FDFDFD;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    transition: transform 0.3s,-webkit-transform 0.3s;
+}
+
+.checkBox .switch:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #FFF;
+    box-shadow: 0 1px 3px rgba(0,0,0,.4);
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    transition: transform 0.3s,-webkit-transform 0.3s;
+}
+
+.checkBox .switch:checked {
+    border-color: #e62129;
+    background-color: #e62129;
+}
+
+
+@weuiCellBg:#FFFFFF;
+@weuiCellBorderColor:#D9D9D9;
+@weuiCellGapV:10px;
+@weuiCellGapH:15px;
+@weuiCellInnerGapH:.35em;
+@weuiCellHeight: 44px;
+@weuiCellFontSize:17px;
+@weuiCellTipsFontSize:14px;
+@weuiCellLabelWidth:105px;
+
+@weuiCellLineHeight: unit((@weuiCellHeight - 2 * @weuiCellGapV) / @weuiCellFontSize); // 高度为44px，减去上下padding的行高
+@weuiCellsMarginTop:unit(20 / @weuiCellFontSize, em);
+
+// weui switch
+@weuiSwitchHeight: 32px;
+
+// weui uploader
+@weuiUploaderBorderColor:#D9D9D9;
+@weuiUploaderActiveBorderColor:#999999;
+@weuiUploaderFileSpacing: 9px;
+@weuiUploaderSize: 79px;
+@weuiUploaderBorderWidth: 1px;
+
+
+.weui-cell_switch{
+    padding-top: (@weuiCellHeight - @weuiSwitchHeight) / 2;
+    padding-bottom: (@weuiCellHeight - @weuiSwitchHeight) / 2;
+}
+.weui-switch{
+    appearance: none;
+}
+.weui-switch,
+.weui-switch-cp__box{
+    position: relative;
+    width: 52px;
+    height: @weuiSwitchHeight;
+    border: 1px solid #DFDFDF;
+    outline: 0;
+    border-radius: 16px;
+    box-sizing: border-box;
+    background-color: #DFDFDF;
+    transition: background-color .1s, border .1s;
+
+    &:before{
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: @weuiSwitchHeight - 2;
+        border-radius: 15px;
+        background-color: #FDFDFD;
+        transition:transform .35s cubic-bezier(0.45, 1, 0.4, 1);
+    }
+    &:after{
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: @weuiSwitchHeight - 2;
+        height: @weuiSwitchHeight - 2;
+        border-radius: 15px;
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        transition:transform .35s cubic-bezier(0.4, 0.4, 0.25, 1.35);
+    }
+}
+.weui-switch:checked,
+.weui-switch-cp__input:checked ~ .weui-switch-cp__box{
+    border-color: #04BE02;
+    background-color: #04BE02;
+    &:before {
+        transform: scale(0);
+    }
+    &:after {
+        transform: translateX(20px);
+    }
+}
+
+// 兼容IE Edge的版本
+.weui-switch-cp__input{
+    position: absolute;
+    left: -9999px;
+}
+.weui-switch-cp__box{
+    display: block;
+}
