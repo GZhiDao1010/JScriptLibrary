@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>大海捞红包</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/style-index.css" />
+</head>
+<body class="body_bg">
+
+<section class="music_box" id="musicBox" title="背景音乐">
+	<audio style="opacity:0" id="musicAudio">
+		<source src="http://play.baidu.com/?__methodName=mboxCtrl.playSong&fm=altg&__argsValue=1523558#" />
+	</audio>
+</section>
+
+<section class="left_timer" id="leftTime" title="倒数计时">
+	<span id="sec">00</span> 秒
+</section>
+
+<canvas id="gameWorkPlace" class="game_work_place"></canvas>
+
+<img alt="小船" class="move_imgs" src="../img/ship.png">
+<img alt="星星" class="move_imgs" src="../img/stars.png">
+<img alt="瓶子" class="move_imgs" src="../img/bottle.png">
+
+<script src="../js/jquery-2.2.2.min.js"></script>
+<script src="../js/redSeaFish.js"></script>
+<script>
+window.onload =function(){
+	redSeaFish.staticGame();
+}
+$(function(){
+	
+	//redSeaFish.secondsCountdown();
+})
+</script>
+</body>
+</html>

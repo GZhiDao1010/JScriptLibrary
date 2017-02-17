@@ -5,6 +5,8 @@
 /* Import lib-rem.less if supportREM opened. */
 @import "lib-rem";
 @import "reset";
+@import "swiper";
+
 *{padding:0;margin:0;}
 body{
 	font-size:14px;
@@ -250,4 +252,195 @@ body{
 		}
 	}
 	.getit{width:100%;}
+}
+.rule_top{
+	overflow:hidden;
+	background-repeat:no-repeat;
+	color:#fff;
+	font-size:25px;
+	position:relative;
+	text-align:center;
+	.rule_top_bg{
+		width:100%;
+		position:absolute;
+		top:0;
+		left:0;
+		z-indent:-1;
+	}
+	p{
+		position:absolute;
+		top:40%;
+		left:0;
+		width:100%;
+		font-weight:bold;
+	}
+	.go_back{
+		top: -4px;
+	}
+}
+
+.rule_play_way{
+	width:86%;
+	margin: 0 2%;
+	padding:0 5%;
+	background-color:#fff;
+	border-radius:5px;
+	position:absolute;
+	overflow-y:auto;
+	left:0;
+	
+	p{
+		white-space: pre-wrap;word-wrap: break-word; 
+		line-height:1.8;
+	}
+	h1{
+		font-size:14px;
+		margin:0;padding:30px 0 0 ;
+	}
+	.rule_title{
+		border-bottom:1px solid #ea0046;
+		height:20px;
+		position:relative;
+		margin-bottom:30px;
+		span{
+			position:absolute;
+			width:130px;
+			background-color:#fff;
+			left:50%;
+			top:12px;
+			text-align:center;
+			margin-left:-65px;
+			color:#ce0235;
+			font-weight:bold;
+			font-size:13px;
+		}
+	}
+
+}
+
+.menuScrollBar{
+	height:100px;
+	margin-bottom:20px;
+	.swiper-slide{
+		text-align:center;
+	}
+	.logo_list{
+		img{
+			height:70px;
+			width:90%;
+			padding: 0 5%;
+		}
+		p{
+			overflow: hidden;
+		    text-overflow:ellipsis;
+		    white-space: nowrap;
+		    padding:0 3px;
+		    font-size:13px;
+		    color:#444;
+		}
+	}
+}
+.my_price_note{
+	color:#444;
+	ul{
+		li{
+			list-style-type: none;
+			padding-bottom:5px;
+			height:25px;
+		}
+		p{
+			float:left;
+			overflow: hidden;
+		    text-overflow:ellipsis;
+		    white-space: nowrap;
+		    padding-right:1%;
+		    font-size:13px;
+		    &:nth-of-type(1){
+		    	 width:30%;
+		    }
+		    &:nth-of-type(2){
+		    	width:38%;
+		    }
+		    &:nth-of-type(3){
+		    	 width:30%;
+		    	 padding-right:0;
+		    	 text-align:center;
+		    	 color:#ea0046;
+		    }
+		}
+	}
+	
+}
+.play_agin{
+	border:0;
+	border-radius:15px;
+	margin-top:5px;
+	padding:5px 15px;
+	font-size:14px;
+	background-color:#f6ff2e;color:#eb0056;
+}
+.fill_in_msg{
+	background-image:url('../img/intomsg.png');
+	background-size:auto 100%;
+	background-position:center;
+	background-repeat:no-repeat;
+	height:100px;
+	width:100%;
+	position:relative;
+	.fill_in_msg_line{
+		height:28px;
+		position:absolute;
+		width:100%;
+		bottom:0;
+		z-index:-1;
+		background-color:#ea344d;
+		border-radius:8px 8px 0 0;
+	}
+}
+.fill_in_inputs{
+	background-color:#ea344d;
+	color:#fff;
+	border-radius:0  0 8px 8px;
+		font-size:13px;
+	    padding-top:40px;
+	    padding-bottom:25px;
+	.row{
+		padding-bottom:25px;
+	}
+	.input_number{
+		width:60%;
+		border:0;
+		color:#444;
+		padding:7px 5px;
+		border-radius:3px;
+	}
+	.get_yzm{
+		color:#ffff67;
+		border:1px solid #ffff67;
+		border-radius:3px;
+		padding:6px;
+		margin-left:8px;
+		font-size:12px;
+		background-color:#ea344d;
+	}
+	.play_agin{
+		width:40%;
+		margin-top:20px;
+		font-size:13px;
+		padding:6px 0;
+		&:active{
+			background-color:#a4ab17;
+		}
+	}
+}
+.game_work_place{
+	width:100%;
+	border:1px solid red;
+	position:absolute;
+	left:0;
+	bottom:0;
+	box-sizing:border-box;
+}
+.move_imgs{
+	display:none;
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>大海捞红包</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/style-index.css" />
+</head>
+<body style="background-color:#ec005f">
+<section class="rule_top">
+	<img class="rule_top_bg" src="../img/topbg.png">
+	<section class="go_back_box">
+		<a href="javascript:;" onclick="history.go(-1)" class="go_back"></a>
+	</section>
+	<p>大海捞红包游戏奖品</p>
+</section>
+
+<section class="rule_play_way" id="rule_middle_cont">
+	<section class="rule_title">
+		<span>游戏奖品</span>
+	</section>
+	
+	<section class="rule_price_list">
+	<div class="swiper-container menuScrollBar">
+	  <div class="swiper-wrapper">
+	    <div class="swiper-slide">
+	      <div class="logo_list">
+	        <img src="../img/begin.png">
+	        <p>预约</p>
+	      </div>
+	    </div>
+	    <div class="swiper-slide">
+	      <div class="logo_list">
+	        <img src="../img/bg.png">
+	        <p>套餐购买3</p>
+	      </div>
+	    </div>
+	   <div class="swiper-slide">
+	      <div class="logo_list">
+	        <img src="../img/topbg.png">
+	        <p>套餐购买2</p>
+	      </div>
+	    </div>
+	    <div class="swiper-slide">
+	      <div class="logo_list">
+	        <img src="../img/music.png">
+	        <p>套餐购买1</p>
+	      </div>
+	    </div>
+	    <div class="swiper-slide">
+	      <div class="logo_list">
+	        <img src="../img/topbg.png">
+	        <p>套餐购买31333333</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</section>
+	<section class="rule_title">
+		<span>我的中奖记录</span>
+	</section>
+	<section class="my_price_note" title="我的中奖记录">
+		暂无记录
+	</section>
+	
+</section>
+
+<script src="../js/jquery-2.2.2.min.js"></script>
+<script src="../js/redSeaFish.js"></script>
+<script type="text/javascript" src="../js/swiper/swiper.min.js"></script> 
+<script>
+$(function(){
+	redSeaFish.playRule();
+	var mySwiper = new Swiper('.menuScrollBar',{
+	    paginationClickable: true,
+	    slidesPerView: 3
+	  });
+})
+</script>
+</body>
+</html>
