@@ -196,25 +196,197 @@ redSeaFish.canvasHeight = function(){ //画布自适应高度
 		"height":wHeight+'px'
 	})
 }
-redSeaFish.staticGame = function(){ //静态动画
-	this.canvasHeight();
-	/*var imgGroup = {
-			img:function(){
-				var imgz = new Image();  
-				imgz.src = "../img/stars.png"; 
-				imgz.style.width = "100px";
-				imgz.style.height = "100px";
-				return imgz;
+redSeaFish.test007 = 123;
+redSeaFishPlayGame = {
+		_this:this.redSeaFish,
+		ratios:[134/167,222/59,519/189], //小船、星星、漂流瓶图片的比例
+		size:[0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25], //缩放图片比例
+		num:0,
+		moveImgs:$('.move_imgs'),
+		gameCanvace:document.getElementById("gameWorkPlace").getContext("2d"),   //2d画布
+		activeRange:{//活动范围的宽，高
+			width:$(window).width(),
+			height:$(window).height()*0.35
+		},
+		squares:function(){ //九共格坐标
+			var o = {
+					w:this.activeRange.width*0.9,
+					h:this.activeRange.height*0.9
 			}
-	}*/
-	var moveImgs = $('.move_imgs')[0];
-	var shipsWidth = $('.move_imgs')[0].width*0.2;
-	var shipsHeight = $('.move_imgs')[0].height*0.2;
-	console.log(shipsWidth+'--'+shipsHeight)
-	console.log($('.move_imgs')[0].height)
-	var mycv = document.getElementById("gameWorkPlace");  
-	var myctx = mycv.getContext("2d");
-	myctx.drawImage(moveImgs, 0, 0,shipsWidth,shipsHeight);
+			var _x = Math.floor(o.w/12);
+			var _y = Math.floor(o.h/12);
+			return [
+		              {x:_x*1,y:_y*1},
+		              {x:_x*1,y:_y*2},
+		              {x:_x*1,y:_y*3},
+		              
+		              {x:_x*2,y:_y*1},
+		              {x:_x*2,y:_y*2},
+		              {x:_x*2,y:_y*3},
+		              
+		              {x:_x*3,y:_y*1},
+		              {x:_x*3,y:_y*2},
+		              {x:_x*3,y:_y*3},
+	              ]
+		},
+		randomImgs:function(){ //随机获得一组图片的集合
+			var _t =this;
+			var array =  [_t.moveImgs[0],_t.moveImgs[0],_t.moveImgs[0],_t.moveImgs[1],_t.moveImgs[1],_t.moveImgs[1],_t.moveImgs[2],_t.moveImgs[2],_t.moveImgs[2]];
+			for(var i=array.length - 1;i > 0;i--){
+				var j = Math.floor(Math.random() * (i+1));
+				var temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
+			return array;
+		},
+		drawOrClearCanvace:function(state,array,x){ //绘制/Clear图片
+			var _t = this;
+			for(var i=0;i<array.length;i++){
+				var obj ={
+						url:array[i],
+						axisXY:_t.squares(),
+						imgWidth:array[i].width*0.25,
+						imgHeight:array[i].height*0.25 
+				}
+				
+				if(state == 'draw'){ //绘制
+					//_t.gameCanvace.drawImage(obj.url , obj.axisXY[i].x , obj.axisXY[i].y , obj.imgWidth , obj.imgHeight);
+					//drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight,destX, destY, destWidth, destHeight)
+					_t.gameCanvace.drawImage( obj.url,
+							0,0,
+							array[i].width,array[i].height,
+							obj.axisXY[i].x , obj.axisXY[i].y,
+							obj.imgWidth , obj.imgHeight)
+				}else{ //Clear
+					_t.gameCanvace.clearRect(obj.axisXY[i].x + x - 10 , obj.axisXY[i].y , obj.imgWidth+10 , obj.imgHeight+10);
+				}
+			}
+		},
+		clearCanvace:function(array){ 
+			console.log(array)
+		},
+		beginGame:function(){ //开始游戏
+			var _t =this;
+			var array = _t.randomImgs();
+			//_t.gameCanvace.scale(0.3,0.3);
+			setInterval(function(){
+				_t.drawOrClearCanvace('clear',array,_t.num);
+				_t.drawOrClearCanvace('draw',array,_t.num++)
+				if(_t.num > _t.activeRange.width){
+					_t.num=0;
+					var array2 = _t.randomImgs();
+					_t.drawOrClearCanvace('clear',array2,_t.num);
+					_t.drawOrClearCanvace('draw',array2,_t.num++)
+				}
+			},1000)
+		},
+		test:function(){
+			console.log(this.randomImgs())
+		}
+}
+redSeaFish.staticGame = function(){ //静态动画
+	var _this =this;
+	this.canvasHeight(); //初始化画布高宽
+	
+	var ratios = [134/167,222/59,519/189]; //小船、星星、漂流瓶图片的比例
+	var size = [0.25,0.25,0.25]; //缩放图片比例
+	var moveImgs = $('.move_imgs'); //所用移动图片集合
+	var moveImgGroup = [moveImgs[0],moveImgs[1],moveImgs[2]] //小船、星星、漂流瓶图片标签
+	var moveImgObj = [ //图片显示的高宽
+	    {width:moveImgGroup[0].width*size[0],height:moveImgGroup[0].height*size[0]},
+	    {width:moveImgGroup[1].width*size[1],height:moveImgGroup[1].height*size[1]},
+	    {width:moveImgGroup[2].width*size[2],height:moveImgGroup[2].height*size[2]},
+	    ]
+	var activeRange = { //活动范围的宽，高
+			width:$(window).width(),
+			height:$(window).height()*0.35
+	}
+	
+	var randomImgs = function(){ //随机获得一组图片的集合
+		var array = 	[moveImgs[0],moveImgs[1],moveImgs[2]];
+		for(var i=array.length - 1;i > 0;i--){
+			var j = Math.floor(Math.random() * (i+1));
+			var temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		return array;
+	}
+	var randomImgsGroup = randomImgs();
+	var randomHeights = function(array){ //图片集合中图片的高度
+		var g=[];
+		for(var i=0;i<array.length;i++){
+			var name = array[i].alt;
+			if(name == '小船'){
+				console.log(name)
+				g.push(array[i].height*size[0])
+			}
+			if(name == '星星'){
+				console.log(name)
+				g.push(array[i].height*size[1])
+			}
+			if(name == '瓶子'){
+				console.log(name)
+				g.push(array[i].height*size[2])
+			}
+		}
+		return g;
+	}
+	var randowHeightsGroup = randomHeights(randomImgsGroup);
+	var axisY = function(array){ //根据图片的高度，生成Y轴上不重叠的图片坐标(x,y)
+		var activeRangeHeight = activeRange.height;//画布的高度
+		var n=0;
+		console.log(array)
+		console.log('activeRangeHeight=='+activeRangeHeight)
+		for(var i=0;i<array.length;i++){
+			n+=array[i];
+		}
+		
+		console.log('n==='+n)
+	}
+	console.log(axisY(randowHeightsGroup))
+	
+	var mycv = document.getElementById("gameWorkPlace");   //画布
+	var myctx = mycv.getContext("2d"); //2d
+	var nums = 0;
+	var cleanCanva = function(y){ //清除上一针画面
+		var yz = y-10;
+		myctx.clearRect( yz, randowHeightsGroup[0],randomImgsGroup[0].width*size[0]+10,randomImgsGroup[0].height*size[0]+10)
+		myctx.clearRect( yz, randowHeightsGroup[1],randomImgsGroup[1].width*size[1]+10,randomImgsGroup[1].height*size[1]+10)
+		myctx.clearRect( yz, randowHeightsGroup[2],randomImgsGroup[2].width*size[2]+10,randomImgsGroup[2].height*size[2]+10)
+		
+		myctx.clearRect( yz+20, randowHeightsGroup[0]+20,randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
+		myctx.clearRect( yz+20, randowHeightsGroup[1]+20,randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
+		myctx.clearRect( yz+20, randowHeightsGroup[2]+20,randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
+		
+		myctx.clearRect( yz+60, randowHeightsGroup[0]+60,randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
+		myctx.clearRect( yz+60, randowHeightsGroup[1]+60,randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
+		myctx.clearRect( yz+60, randowHeightsGroup[2]+60,randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
+	}
+	var moveFn = function(y){ //移动
+		myctx.drawImage(randomImgsGroup[0], y, randowHeightsGroup[0],randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
+		myctx.drawImage(randomImgsGroup[1], y, randowHeightsGroup[1],randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
+		myctx.drawImage(randomImgsGroup[2], y, randowHeightsGroup[2],randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
+		
+		myctx.drawImage(randomImgsGroup[0], y+20, randowHeightsGroup[0]+20,randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
+		myctx.drawImage(randomImgsGroup[1], y+20, randowHeightsGroup[1]+20,randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
+		myctx.drawImage(randomImgsGroup[2], y+20, randowHeightsGroup[2]+20,randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
+		
+		myctx.drawImage(randomImgsGroup[0], y+60, randowHeightsGroup[0]+60,randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
+		myctx.drawImage(randomImgsGroup[1], y+60, randowHeightsGroup[1]+60,randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
+		myctx.drawImage(randomImgsGroup[2], y+60, randowHeightsGroup[2]+60,randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
+	}
+	setInterval(function(){
+		console.log()
+		if(nums > activeRange.width){
+			nums = 0;
+			//randomImgs();
+		}else{
+			cleanCanva(nums);
+			moveFn(nums++);
+		}
+	},1000)
 	
 	
 }

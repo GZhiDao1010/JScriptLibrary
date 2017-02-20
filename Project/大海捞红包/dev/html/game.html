@@ -23,7 +23,6 @@
 </section>
 
 <canvas id="gameWorkPlace" class="game_work_place"></canvas>
-
 <img alt="小船" class="move_imgs" src="../img/ship.png">
 <img alt="星星" class="move_imgs" src="../img/stars.png">
 <img alt="瓶子" class="move_imgs" src="../img/bottle.png">
@@ -32,7 +31,9 @@
 <script src="../js/redSeaFish.js"></script>
 <script>
 window.onload =function(){
-	redSeaFish.staticGame();
+	//redSeaFish.staticGame();
+	redSeaFishPlayGame.beginGame()
+	redSeaFishPlayGame.squares();
 }
 $(function(){
 	

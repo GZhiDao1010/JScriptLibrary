@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/style-index.css" />
+</head>
+<body>
+<div class="xcx_container">
+	<div class="row"><button class="big_button green" onclick="xcx.update()">增加</button></div>
+	<table>
+		<thead>
+			<tr><td>小程序</td><td>编辑</td></tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>小程序1</td>
+				<td><button class="small_button orange" onclick="xcx.update(123,'','')">编辑</button>
+				<button  class="small_button green" onclick="xcx.putInto('222')">生成</button>
+				<button  class="small_button red">删除</button>
+				</td>
+			</tr>	
+		</tbody>
+	</table>
+</div>
+
+<!-- <div class="add_" id="update" title="增加小程序">
+	<div class="row title_row">
+		增加/编辑<span class="close"  onclick="xcx.close()">关闭</span>
+	</div>
+	<div class="row">
+		<span class="title">名字：</span><input name="name" type="text" />
+	</div>
+	<div class="row">
+		<span  class="title">上传文件：</span><input name="file"  type="file" />
+	</div>
+	<div class="row">
+		<span  class="title">图片：</span><input name="img"  type="file" />
+	</div>
+	<div class="row center">
+		<button class="big_button green" onclick="xcx.save()">保存</button>
+	</div>
+</div> -->
+
+<!-- <div class="add_" id="putInto"  title="生产小程序">
+	<div class="row title_row">
+		生产小程序<span class="close"  onclick="xcx.close()">关闭</span>
+	</div>
+	<div class="row">
+		<span class="title">appId：</span><input name="name" type="text" />
+	</div>
+	<div class="row">
+		<span class="title">secret：</span><input name="name" type="text" />
+	</div>
+	
+	<div class="row center">
+		<button class="big_button green" onclick="xcx.save()">保存</button>
+	</div>
+</div> -->
+
+</body>
+<script src="../js/jquery-2.2.2.min.js"></script>
+<script>
+var xcx = {};
+xcx.update = function(name,file,img){
+	var n = name || '';
+	var f = file || '';
+	var i = img || '';
+	console.log(n)
+	var h = '<div class="add_project" id="update" title="增加小程序">'+
+	'	<div class="row title_row">'+
+	'		增加/编辑<span class="close"  onclick="xcx.close()">关闭</span>'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span class="title">名字：</span><input name="name" type="text" value="'+n+'" />'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span  class="title">上传文件：</span><input name="file"  type="file" value="'+f+'" />'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span  class="title">图片：</span><input name="img"  type="file" />'+
+	'	</div>'+
+	'	<div class="row center">'+
+	'		<button class="big_button green" onclick="xcx.save()">保存</button>'+
+	'	</div>'+
+	'</div>';
+	if($(document).find('#update').length == 0){
+		$('body').append(h);
+	}
+	
+}
+xcx.close = function(){ 
+	$(document).find('.add_project').remove();
+}
+xcx.save = function(){
+	var demoObj = {
+			name:$('input[name="name"]').val(),
+			file:$('input[name="file"]').val(),
+			img:$('input[name="img"]').val(),
+	}
+	if(demoObj.name == '' || demoObj.name.length >= 30){
+		alert('请输入名字！');
+		return;
+	}
+	if(demoObj.file == ''){
+		alert('请上传文件！')
+		return;
+	}
+	if(demoObj.img == ''){
+		alert('请上传图片！')
+		return;
+	}
+	console.log(demoObj)
+}
+xcx.putInto = function(){
+	var h = '<div class="add_project" id="putInto"  title="小程序代码生成">'+
+	'	<div class="row title_row">'+
+	'		小程序代码生成<span class="close"  onclick="xcx.close()">关闭</span>'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span class="title">appId：</span><input name="name" type="text" />'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span class="title">secret：</span><input name="name" type="text" />'+
+	'	</div>'+
+	'	'+
+	'	<div class="row center">'+
+	'		<button class="big_button green" onclick="xcx.save()">保存</button>'+
+	'	</div>'+
+	'</div>';
+	if($(document).find('#putInto').length == 0){
+		$('body').append(h);
+	}
+}
+</script>
+</html>
