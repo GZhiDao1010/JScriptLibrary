@@ -1,0 +1,78 @@
+.dapin_body{
+  background-color: #279ac7;
+  //background-image: url(../../img/bg.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: top;
+  text-align: center;
+  min-width: 1000px;
+  // overflow: hidden;
+  overflow-x: hidden;
+}
+.dapin_bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.dapin{
+  &_title{
+    width: 50%;
+  }
+  &_time{
+    color: #fef200;
+    font-size: 50px;
+    padding-bottom: 10px;
+  }
+  &_erweima{
+    width: 300px;
+  }
+  &_tips{
+    color: #fff;
+    padding: 15px 0;
+    font-size: 30px;
+  }
+  &_bar_box{
+    position: relative;
+    height: 80px;
+    overflow: hidden;
+    .bar_img{
+      height: 80px;
+      width: 85%;
+    }
+    .bar_name{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      color: #fef200;
+      line-height: 80px;
+      height: 80px;
+      font-size: 40px;
+    }
+  }
+  &_support{
+    width: 200px;
+    margin-top: 10px;
+  }
+}
+@media screen and (min-width: 1201px) {
+.abc {width: 1200px}
+}
+/* css 注释说明：设置了浏览器宽度不小于1201px时 abc 显示1200px宽度 */
+
+@media screen and (max-width: 1200px) {
+.abc {width: 900px}
+}
+/* 设置了浏览器宽度不大于1200px时 abc 显示900px宽度 */
+
+@media screen and (max-width: 900px) {
+.abc {width: 200px;}
+}
+/* 设置了浏览器宽度不大于900px时 abc 显示200px宽度 */
+
+@media screen and (max-width: 500px) {
+.abc {width: 100px;}
+}

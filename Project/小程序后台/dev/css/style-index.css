@@ -471,6 +471,49 @@ html {
   margin: 0;
 }
 
+button {
+  border: 0;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.big_button {
+  padding: 5px 30px;
+}
+
+.small_button {
+  padding: 3px 13px;
+  margin-left: 5px;
+}
+
+.orange {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.orange:hover {
+  background-color: #bb9114;
+}
+
+.green {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.green:hover {
+  background-color: #3e9e42;
+}
+
+.red {
+  background-color: #E91E63;
+  color: #fff;
+}
+
+.red:hover {
+  background-color: #bd2b5d;
+}
+
 .xcx_container {
   font-size: 16px;
   font-family: "微软雅黑";
@@ -479,49 +522,6 @@ html {
 
 .xcx_container .row {
   padding: 20px 0;
-}
-
-.xcx_container button {
-  border: 0;
-  display: inline-block;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.xcx_container .big_button {
-  padding: 5px 30px;
-}
-
-.xcx_container .small_button {
-  padding: 3px 13px;
-  margin-left: 5px;
-}
-
-.xcx_container .orange {
-  background-color: #ff9800;
-  color: #fff;
-}
-
-.xcx_container .orange:hover {
-  background-color: #bb9114;
-}
-
-.xcx_container .green {
-  background-color: #4caf50;
-  color: #fff;
-}
-
-.xcx_container .green:hover {
-  background-color: #3e9e42;
-}
-
-.xcx_container .red {
-  background-color: #E91E63;
-  color: #fff;
-}
-
-.xcx_container .red:hover {
-  background-color: #bd2b5d;
 }
 
 .xcx_container table {
@@ -595,4 +595,34 @@ html {
 
 .add_project .big_button:hover {
   background-color: #3e9e42;
+}
+
+#putInto .title {
+  width: 150px;
+}
+
+.minus_plus {
+  padding: 0 15px;
+  color: #E91E63;
+  font-size: 15px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.delete_confirm {
+  width: 400px;
+  text-align: center;
+  padding: 20px 0;
+  position: absolute;
+  box-shadow: 1px 1px 9px 2px #999;
+  top: 20%;
+  background-color: #fff;
+  left: 50%;
+  margin-left: -200px;
+}
+
+.delete_confirm .text {
+  padding: 20px 0;
+  font-weight: 700;
+  font-size: 15px;
 }

@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="apple-mobile-web-app-capable" content="no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/style-index.css">
+</head>
+<body>
+<div class="xcx_container">
+	<div class="row"><button class="big_button green" onclick="xcx.update()">增加</button></div>
+	<table>
+		<thead>
+			<tr><td>小程序</td><td>编辑</td></tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>小程序1</td>
+				<td><button class="small_button orange" onclick="xcx.update(123,'','')">编辑</button>
+				<button class="small_button green" onclick="xcx.putInto('222')">生成</button>
+				<button class="small_button red" onclick="xcx.isdeleteXcx(this,'小程序1',1)">删除</button>
+				</td>
+			</tr>	
+		</tbody>
+	</table>
+</div>
+
+<!-- <div class="add_" id="update" title="增加小程序">
+	<div class="row title_row">
+		增加/编辑<span class="close"  onclick="xcx.close()">关闭</span>
+	</div>
+	<div class="row">
+		<span class="title">名字：</span><input name="name" type="text" />
+	</div>
+	<div class="row">
+		<span  class="title">上传文件：</span><input name="file"  type="file" />
+	</div>
+	<div class="row">
+		<span  class="title">图片：</span><input name="img"  type="file" />
+	</div>
+	<div class="row center">
+		<button class="big_button green" onclick="xcx.save()">保存</button>
+	</div>
+</div> -->
+<!-- 
+<div class="add_project" id="putInto"  title="生产小程序">
+	<div class="row title_row">
+		生产小程序<span class="close"  onclick="xcx.close()">关闭</span>
+	</div>
+	<div class="row">
+		<span class="title">appId：</span><input name="name" type="text" />
+	</div>
+	<div class="row">
+		<span class="title">secret：</span><input name="name" type="text" />
+	</div>
+	<div class="row">
+		<span class="title">
+			<input name="name" type="text" style="width:70px;text-align:right" />：
+		</span>
+		<input name="name" type="text" /><button class="minus_plus" title="删除" onclick="xcx.deleteRow(this)"> - </button>
+	</div>
+	<div class="row" style="text-align: center;">
+		<button class="minus_plus " style="color: #4caf50; " title="添加" onclick="xcx.addRow(this)">+</button>
+	</div>
+	<div class="row center">
+		<button class="big_button green" onclick="xcx.save()">保存</button>
+	</div>
+</div> -->
+<!-- <div class="delete_confirm">
+	<div class="text">46346464</div>
+	<div>
+		<button class="big_button green" onclick="xcx.update()">删除</button>
+		<button class="big_button red" onclick="xcx.update()">取消</button>
+	</div>
+</div> -->
+</body>
+<script src="../js/jquery-2.2.2.min.js"></script>
+<script>
+var xcx = {};
+xcx.update = function(name,file,img){
+	var n = name || '';
+	var f = file || '';
+	var i = img || '';
+	console.log(n)
+	var h = '<div class="add_project" id="update" title="增加小程序">'+
+	'	<div class="row title_row">'+
+	'		增加/编辑<span class="close"  onclick="xcx.close()">关闭</span>'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span class="title">名字：</span><input name="name" type="text" value="'+n+'" />'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span  class="title">上传文件：</span><input name="file"  type="file" value="'+f+'" />'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span  class="title">图片：</span><input name="img"  type="file" />'+
+	'	</div>'+
+	'	<div class="row center">'+
+	'		<button class="big_button green" onclick="xcx.save()">保存</button>'+
+	'	</div>'+
+	'</div>';
+	if($(document).find('#update').length == 0){
+		$('body').append(h);
+	}
+	
+}
+xcx.close = function(){ 
+	$(document).find('.add_project').remove();
+}
+xcx.save = function(){
+	var demoObj = {
+			name:$('input[name="name"]').val(),
+			file:$('input[name="file"]').val(),
+			img:$('input[name="img"]').val(),
+	}
+	if(demoObj.name == '' || demoObj.name.length >= 30){
+		alert('请输入名字！');
+		return;
+	}
+	if(demoObj.file == ''){
+		alert('请上传文件！')
+		return;
+	}
+	if(demoObj.img == ''){
+		alert('请上传图片！')
+		return;
+	}
+	console.log(demoObj)
+}
+xcx.putInto = function(){
+	var h = '<div class="add_project" id="putInto"  title="小程序代码生成">'+
+	'	<div class="row title_row">'+
+	'		小程序代码生成<span class="close"  onclick="xcx.close()">关闭</span>'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span class="title">appId：</span><input name="appId" type="text" />'+
+	'	</div>'+
+	'	<div class="row">'+
+	'		<span class="title">secret：</span><input name="secret" type="text" />'+
+	'	</div>'+
+	'	<div class="row" style="text-align: center;">'+
+	'		<button class="minus_plus " style="color: #4caf50; " title="添加" onclick="xcx.addRow(this)">+</button>'+
+	'	</div>'+
+	'	<div class="row center">'+
+	'		<button class="big_button green" onclick="xcx.savePutInto(this)">保存</button>'+
+	'	</div>'+
+	'</div>';
+	if($(document).find('#putInto').length == 0){
+		$('body').append(h);
+	}
+}
+xcx.addRow = function(t){
+	var h='<div class="row">'+
+	'		<span class="title">'+
+	'			<input class="addrowtitle" type="text" style="width:70px;text-align:right" />：'+
+	'		</span>'+
+	'		<input class="addrowcenter" type="text" /><button class="minus_plus" title="删除" onclick="xcx.deleteRow(this)"> - </button>'+
+	'	</div>';
+	$(t).parent('.row').before(h);
+}
+xcx.deleteRow = function(t){
+	$(t).parent('.row').remove();
+}
+xcx.savePutInto = function(t){
+	var _this = $(t).parents('#putInto');
+	var addrowtitle = _this.find('.addrowtitle');
+	var addrowcenter = _this.find('.addrowcenter');
+	
+	if(addrowtitle){
+		var o={},g=[];
+		for(var i=0;i<addrowtitle.length;i++){
+			console.log(addrowtitle[i].value)
+			o.addrowtitle = addrowtitle[i].value;
+			o.addrowcenter = addrowcenter[i].value;
+			g.push(o);
+		}
+	}
+	
+	if(g){
+		for(var j=0;j<g.length;j++){
+			if(g[j].addrowtitle.length == 0){
+				alert('请输入标题！');
+				return;
+			}
+			if(g[j].addrowcenter.length == 0){
+				alert('请输入内容！');
+				return;
+			}
+		}
+	}
+	var obj = {
+			appId:_this.find('input[name="appId"]').val(),
+			secret:_this.find('input[name="secret"]').val(),
+	}
+	if(obj.appId.length == 0){
+		alert('请输入appId！');
+		return;
+	}
+	if(obj.secret.length == 0){
+		alert('请输入secret！');
+		return;
+	}
+	g.push(obj);
+	console.log(g)
+	
+}
+xcx.isdeleteXcx=function(t,name,id){ //打开删除询问框
+	if($(document).find('.delete_confirm').length != 0){
+		return;
+	}
+	var h='<div class="delete_confirm">'+
+	'	<div class="text">确定要删除'+name+'么？</div>'+
+	'	<div>'+
+	'		<button class="big_button green" onclick="xcx.deleteXcx('+id+')">删除</button>'+
+	'		<button class="big_button red" onclick="xcx.cancleXcx(this)">取消</button>'+
+	'	</div>'+
+	'</div>';
+	$('body').append(h);
+}
+xcx.cancleXcx = function(t){ //关闭删除提示
+	$(t).parents('.delete_confirm').remove();
+}
+xcx.deleteXcx = function(id){ //确认删除
+	alert(id)
+}
+</script>
+</html>

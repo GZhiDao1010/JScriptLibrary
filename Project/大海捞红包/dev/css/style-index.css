@@ -2043,8 +2043,6 @@ body {
 }
 
 .game_work_place {
-  width: 100%;
-  border: 1px solid red;
   position: absolute;
   left: 0;
   bottom: 0;
