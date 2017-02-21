@@ -5,14 +5,7 @@
 *{
 padding:0;margin:0;
 }
-.xcx_container{
-	font-size:16px;
-	font-family:"微软雅黑";
-	padding:30px 20px;
-	.row{
-		padding: 20px 0;
-	}
-	button{
+button{
 		border:0;
 		display:inline-block;
 		cursor:pointer;
@@ -46,6 +39,14 @@ padding:0;margin:0;
 			background-color:#bd2b5d;
 		}
 	}
+.xcx_container{
+	font-size:16px;
+	font-family:"微软雅黑";
+	padding:30px 20px;
+	.row{
+		padding: 20px 0;
+	}
+	
 	table{
 		width:100%;border-collapse: collapse;
 	}
@@ -105,5 +106,31 @@ padding:0;margin:0;
 		&:hover{
 			background-color:#3e9e42;
 		}
+	}
+}
+#putInto .title{
+	width:150px;
+}
+.minus_plus{
+	padding:0 15px;
+	color:#E91E63;
+	font-size:15px;
+	margin-left:10px;
+	cursor:pointer;
+}
+.delete_confirm{
+	width:400px;
+	text-align:center;
+	padding:20px 0;
+	position: absolute;
+	box-shadow:1px 1px 9px 2px #999;
+	top:20%;
+	background-color:#fff;	
+	left:50%;
+	margin-left:-200px;
+	.text{
+		padding:20px 0;
+		font-weight:700;
+		font-size:15px;
 	}
 }

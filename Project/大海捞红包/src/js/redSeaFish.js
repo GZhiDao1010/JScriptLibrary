@@ -191,47 +191,58 @@ redSeaFish.timeOut = function(){ //30秒倒计时结束执行方法
 	alert('方法名：redSeaFish.timeOut()')
 }
 redSeaFish.canvasHeight = function(){ //画布自适应高度
-	var wHeight = $(window).height()*0.35;
-	return $('#gameWorkPlace').css({
-		"height":wHeight+'px'
+	var wHeight = $(window).height()*0.46;
+	var wWidth = $(window).width()/3;
+	$('#gameWorkPlace').css({
+		"height":wHeight+'px',
+		"width":wWidth+'px'
+	})
+	$('#gameWorkPlace2').css({
+		"height":wHeight+'px',
+		"width":wWidth+'px',
+		"left":wWidth*-1+'px'
 	})
 }
 redSeaFish.test007 = 123;
 redSeaFishPlayGame = {
 		_this:this.redSeaFish,
+		imgUrl:[ //图片资源
+		        '../img/ship.png',
+		        '../img/stars.png',
+		        '../img/bottle.png'
+		        ],
+		
+		//-------------------------
 		ratios:[134/167,222/59,519/189], //小船、星星、漂流瓶图片的比例
-		size:[0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25], //缩放图片比例
+		size:[0.20,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2], //缩放图片比例
 		num:0,
 		moveImgs:$('.move_imgs'),
 		gameCanvace:document.getElementById("gameWorkPlace").getContext("2d"),   //2d画布
+		gameCanvace2:document.getElementById("gameWorkPlace2").getContext("2d"),   //2d画布
 		activeRange:{//活动范围的宽，高
-			width:$(window).width(),
-			height:$(window).height()*0.35
+			width:$(window).width()/3,
+			height:$(window).height()*0.46
 		},
 		squares:function(){ //九共格坐标
 			var o = {
-					w:this.activeRange.width*0.9,
-					h:this.activeRange.height*0.9
+					w:this.activeRange.width,
+					h:this.activeRange.height
 			}
-			var _x = Math.floor(o.w/12);
-			var _y = Math.floor(o.h/12);
-			return [
-		              {x:_x*1,y:_y*1},
-		              {x:_x*1,y:_y*2},
-		              {x:_x*1,y:_y*3},
-		              
-		              {x:_x*2,y:_y*1},
-		              {x:_x*2,y:_y*2},
-		              {x:_x*2,y:_y*3},
-		              
-		              {x:_x*3,y:_y*1},
-		              {x:_x*3,y:_y*2},
-		              {x:_x*3,y:_y*3},
+			
+			var _x = Math.floor(o.w/3);
+			var _y = Math.floor(o.h/3);
+			var g =  [
+		              {dx:10,dy:_y*0 },
+		              {dx:10,dy:_y*1},
+		              {dx:10,dy:_y*2.5},
 	              ]
+			console.log(o.h)
+			return g;
 		},
 		randomImgs:function(){ //随机获得一组图片的集合
 			var _t =this;
-			var array =  [_t.moveImgs[0],_t.moveImgs[0],_t.moveImgs[0],_t.moveImgs[1],_t.moveImgs[1],_t.moveImgs[1],_t.moveImgs[2],_t.moveImgs[2],_t.moveImgs[2]];
+			//var array =  [_t.moveImgs[0],_t.moveImgs[0],_t.moveImgs[0],_t.moveImgs[1],_t.moveImgs[1],_t.moveImgs[1],_t.moveImgs[2],_t.moveImgs[2],_t.moveImgs[2]];
+			var array =  [_t.moveImgs[0],_t.moveImgs[1],_t.moveImgs[2]];
 			for(var i=array.length - 1;i > 0;i--){
 				var j = Math.floor(Math.random() * (i+1));
 				var temp = array[i];
@@ -242,25 +253,42 @@ redSeaFishPlayGame = {
 		},
 		drawOrClearCanvace:function(state,array,x){ //绘制/Clear图片
 			var _t = this;
+			var axisXY=_t.squares();
+			console.log(axisXY)
 			for(var i=0;i<array.length;i++){
 				var obj ={
 						url:array[i],
-						axisXY:_t.squares(),
-						imgWidth:array[i].width*0.25,
-						imgHeight:array[i].height*0.25 
+						imgWidth:array[i].width*0.45,
+						imgHeight:array[i].height*0.45 
 				}
-				
 				if(state == 'draw'){ //绘制
 					//_t.gameCanvace.drawImage(obj.url , obj.axisXY[i].x , obj.axisXY[i].y , obj.imgWidth , obj.imgHeight);
 					//drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight,destX, destY, destWidth, destHeight)
 					_t.gameCanvace.drawImage( obj.url,
 							0,0,
 							array[i].width,array[i].height,
-							obj.axisXY[i].x , obj.axisXY[i].y,
+							axisXY[i].dx, axisXY[i].dy,
 							obj.imgWidth , obj.imgHeight)
+							
 				}else{ //Clear
-					_t.gameCanvace.clearRect(obj.axisXY[i].x + x - 10 , obj.axisXY[i].y , obj.imgWidth+10 , obj.imgHeight+10);
+					_t.gameCanvace.clearRect(axisXY[i].dx,axisXY[i].dy, obj.imgWidth , obj.imgHeight+10);
 				}
+			}
+		},
+		drawOrClearCanvace2:function(state,array,x){ //绘制/Clear图片
+			var _t = this;
+			var axisXY=_t.squares();
+			for(var i=0;i<array.length;i++){
+				var obj ={
+						url:array[i],
+						imgWidth:array[i].width*0.25,
+						imgHeight:array[i].height*0.25 
+				}
+				_t.gameCanvace2.drawImage( obj.url,
+						0,0,
+						array[i].width,array[i].height,
+						axisXY[i].dx, axisXY[i].dy,
+						obj.imgWidth , obj.imgHeight)
 			}
 		},
 		clearCanvace:function(array){ 
@@ -269,21 +297,26 @@ redSeaFishPlayGame = {
 		beginGame:function(){ //开始游戏
 			var _t =this;
 			var array = _t.randomImgs();
-			//_t.gameCanvace.scale(0.3,0.3);
-			setInterval(function(){
-				_t.drawOrClearCanvace('clear',array,_t.num);
-				_t.drawOrClearCanvace('draw',array,_t.num++)
-				if(_t.num > _t.activeRange.width){
-					_t.num=0;
-					var array2 = _t.randomImgs();
-					_t.drawOrClearCanvace('clear',array2,_t.num);
-					_t.drawOrClearCanvace('draw',array2,_t.num++)
-				}
-			},1000)
+			_t._this.canvasHeight();
+			console.log(_t.gameCanvace)
+			_t.drawOrClearCanvace('draw',array,_t.num++)
+			
+			
+//			setInterval(function(){
+//				_t.drawOrClearCanvace('clear',array,_t.num);
+//				_t.drawOrClearCanvace('draw',array,_t.num++)
+//				if(_t.num > _t.activeRange.width/10){
+//					_t.num=0;
+//					var array2 = _t.randomImgs();
+//					_t.drawOrClearCanvace('clear',array2,_t.num);
+//					_t.drawOrClearCanvace('draw',array2,_t.num++)
+//				}
+//			},100)
 		},
 		test:function(){
 			console.log(this.randomImgs())
 		}
+		//-------------------------
 }
 redSeaFish.staticGame = function(){ //静态动画
 	var _this =this;

@@ -21,8 +21,22 @@
 <section class="left_timer" id="leftTime" title="倒数计时">
 	<span id="sec">00</span> 秒
 </section>
-
-<canvas id="gameWorkPlace" class="game_work_place"></canvas>
+<style>
+#canvacePlace{
+	border:1px solid green;
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:200%;
+}
+.game_work_place{
+	border:1px solid red;
+}
+</style>
+<div id="canvacePlace">
+	<canvas id="gameWorkPlace" class="game_work_place"></canvas>
+	<canvas id="gameWorkPlace2" class="game_work_place gameWorkPlace2"></canvas>
+</div>
 <img alt="小船" class="move_imgs" src="../img/ship.png">
 <img alt="星星" class="move_imgs" src="../img/stars.png">
 <img alt="瓶子" class="move_imgs" src="../img/bottle.png">
@@ -32,6 +46,7 @@
 <script>
 window.onload =function(){
 	//redSeaFish.staticGame();
+	
 	redSeaFishPlayGame.beginGame()
 	redSeaFishPlayGame.squares();
 }
