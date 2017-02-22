@@ -21,6 +21,7 @@
 <section class="left_timer" id="leftTime" title="倒数计时">
 	<span id="sec">00</span> 秒
 </section>
+<button onclick="redSeaFishPlayGame.beginGame()" style="margin:50px;padding:15px;">开始/暂停</button>
 <style>
 #canvacePlace{
 	border:1px solid green;
@@ -33,22 +34,18 @@
 	border:1px solid red;
 }
 </style>
-<div id="canvacePlace">
-	<canvas id="gameWorkPlace" class="game_work_place"></canvas>
-	<canvas id="gameWorkPlace2" class="game_work_place gameWorkPlace2"></canvas>
-</div>
+<canvas id="gameWorkPlace" class="game_work_place"></canvas>
+<div style="display:none" title="显示的礼物">
 <img alt="小船" class="move_imgs" src="../img/ship.png">
 <img alt="星星" class="move_imgs" src="../img/stars.png">
 <img alt="瓶子" class="move_imgs" src="../img/bottle.png">
-
+</div>
 <script src="../js/jquery-2.2.2.min.js"></script>
 <script src="../js/redSeaFish.js"></script>
 <script>
 window.onload =function(){
 	//redSeaFish.staticGame();
 	
-	redSeaFishPlayGame.beginGame()
-	redSeaFishPlayGame.squares();
 }
 $(function(){
 	
