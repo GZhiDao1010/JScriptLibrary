@@ -190,14 +190,7 @@ redSeaFish.secondsCountdown = function(){ //30秒倒计时
 redSeaFish.timeOut = function(){ //30秒倒计时结束执行方法
 	alert('方法名：redSeaFish.timeOut()')
 }
-redSeaFish.canvasHeight = function(){ //画布自适应高度
-	var wHeight = $(window).height()*0.4;
-	var wWidth = $(window).width();
-	return $('#gameWorkPlace').css({
-		"height":wHeight+'px',
-		"width":wWidth+'px'
-	})
-}
+
 redSeaFish.test007 = 123;
 redSeaFishPlayGame = {
 		_this:this.redSeaFish,
@@ -205,23 +198,113 @@ redSeaFishPlayGame = {
 		size:[0.20,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2], //缩放图片比例
 		num:0,
 		moveImgs:$('.move_imgs'),
-		gameCanvace:document.getElementById("gameWorkPlace").getContext("2d"),   //2d画布
+		gameCanvace:document.getElementById("gameWorkPlace").getContext("2d"),   //漂流画布
+		//catFishingCanvas:document.getElementById('catFishing').getContext('2d'),//黑猫捞红包画布
 		activeRange:{//活动范围的宽，高
 			width:$(window).width(),
 			height:$(window).height()*0.4
 		},
-		squares:function(){ //九共格坐标
+		gameCanvaceHeight:function(){ //画布自适应高度
+			var wHeight = $(window).height();
+			var wWidth = $(window).width();
+			$('#gameWorkPlace').css({
+				"height":wHeight*0.4+'px',
+				"width":wWidth+'px'
+			})
+		},
+		treeCatStyle:function(){ //初始化树猫渔网图片
+			if($(window).height() < 490){
+				$('#rod').css({
+					"top":'10%',
+				})
+				$('#net').css({
+					"top":'8%',
+				})
+			}
+			
+		},
+		touchstart:function(){ //手指触摸事件
+			console.log('手指触摸事件')
+			var net  = document.querySelectorAll('.net');
+			var netXY = {
+					x:net[0].x,
+					y:net[0].y,
+			}
+			var num = 0;
+			console.log(netXY)
+		    
+		},
+		touchend:function(){ //手指离开屏幕事件
+			console.log('手指离开屏幕事件')
+		},
+//		catFishingImgUrl:{
+//			treeCat:'../img/treeCat.png',//树猫
+//			rod:'../img/rod.png',//鱼竿
+//			net:'../img/net.png' // 鱼网
+//		},
+//		catFishingImg:function(){ //树猫,鱼竿,鱼网存入img
+//			return imgList = {
+//				treeCat:document.getElementById('tree_cat'),
+//				rod:document.getElementById('rod'),
+//				net:document.getElementById('net')
+//			}
+//			 
+//		},
+//		putCatFisingIntoCanvas:function(){ //将树猫,鱼竿,鱼网映射到catFishing画布上
+//			return;
+//			var _this =this,
+//				_catFishingCanvas = _this.catFishingCanvas,
+//				_catFishing = _this.catFishingImg(),
+//				zoom=1,
+//				treeCatHW = {
+//					h:_catFishing.treeCat.height*zoom,
+//					w:_catFishing.treeCat.width*zoom
+//				},
+//				rodtHW = {
+//					h:_catFishing.rod.height*zoom,
+//					w:_catFishing.rod.width*zoom
+//				},
+//				netHW = {
+//					h:_catFishing.net.height*zoom,
+//					w:_catFishing.net.width*zoom
+//				};
+//			console.log(treeCatHW)
+//			_catFishingCanvas.scale(0.3,0.3)
+//			_catFishingCanvas.drawImage(
+//					_catFishing.treeCat,
+//					0,0,
+//					treeCatHW.w,treeCatHW.h,
+//					0,0,
+//					treeCatHW.w*0.6,treeCatHW.h*0.3
+//			)
+//			_catFishingCanvas.restore();  
+//			
+//		},
+		heighEqual:function(){ //根据高度调整漂流礼物的高度间隔
+			var equal=0;
+			var wheight = $(window).height();
+			if(wheight >= 700){
+				equal = 6;
+			}else if(wheight >= 600 && wheight < 700){
+				equal = 5.8;
+			}else{
+				equal = 4.5;
+			}
+			return equal;
+		},
+		squares:function(){ //获得三个礼物的坐标位置dx,dy
+			var heighEqual = this.heighEqual();
 			var o = {
 					w:this.activeRange.width,
 					h:this.activeRange.height
 			}
 			
 			var _x = Math.floor(o.w/3);
-			var _y = Math.floor(o.h/4);
+			var _y = Math.floor(o.h/heighEqual);
 			var g =  [
-		              {dx:-80,dy:_y*0+10},
-		              {dx:-80,dy:_y*1},
-		              {dx:-80,dy:_y*2},
+		              {dx:-90,dy:_y*0+10},
+		              {dx:-90,dy:_y*1+10},
+		              {dx:-90,dy:_y*2+10},
 	              ]
 			return g;
 		},
@@ -250,21 +333,28 @@ redSeaFishPlayGame = {
 						imgWidth:array[i].width*0.25,
 						imgHeight:array[i].height*0.25 
 				}
+				
 				_canvas.clearRect(axisXY[i].dx+_dx-1,axisXY[i].dy, obj.imgWidth, obj.imgHeight);
 				_canvas.drawImage( obj.url,
 						0,0,
 						array[i].width,array[i].height,
 						axisXY[i].dx+_dx, axisXY[i].dy,
-						obj.imgWidth , obj.imgHeight)
+						obj.imgWidth , obj.imgHeight);
+				var o ={
+						url:array[i],
+						dx:axisXY[i].dx+_dx,
+						dy:axisXY[i].dy
+				}
+				
 			}
 		},
 		speed:25, //移动速度
 		density:2500, //礼物的密度
-		gameTime:30,//礼物在河中的时间
+		gameTime:1000,//礼物在河中的时间
 		switchGame:false,//是否暂停游戏
 		beginGame:function(){ //开始游戏
 			var _t = this;
-			_t._this.canvasHeight(); //设置画布高度
+			_t.gameCanvaceHeight(); //设置画布高度
 			if(_t.switchGame){
 				_t.switchGame = false;
 			}else{
@@ -282,12 +372,36 @@ redSeaFishPlayGame = {
 					
 				},i*_t.density)
 			}
+			
+			setTimeout(function(){
+				_t.switchGame = false;
+				console.log('停止')
+			},_t.gameTime * _t.density)
 		},
 		stopGame:function(){
 			this.switchGame = false;
 		},
 		againGame:function(){
 			this.switchGame = true;
+		},
+		getCanvasMsg:function(){//获得画布上指定坐标上图片信息
+			var canvasImg  = this.gameCanvace.getImageData(10,10,50,50);
+			var n=0;
+			var red=0,green=0,blue=0,alpha=0;
+			var _data = canvasImg.data;
+			for(var i=0;i<_data.length;i+=4){
+				n+=parseInt(canvasImg.data[i]);
+				red+= parseInt( _data[i]);
+				green+= parseInt(_data[i+1]);
+				blue+= parseInt(_data[i+2]);
+				alpha+= parseInt(_data[i+3]);
+			}
+			if(red > 80000 && blue > 80000){
+				
+				console.log('捞到红包')
+			}
+			//var getCanvasImg = document.getElementById('getCanvasImg').getContext('2d')
+			//getCanvasImg.putImageData(canvasImg,0,0) ;//画布上还原canvasImg图片
 		}
 		
 }

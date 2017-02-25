@@ -1571,6 +1571,12 @@ body {
   background-size: 100% 100%;
 }
 
+.body_bg_notitle {
+  background-image: url(../img/notitlebg.png);
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+
 .music_box {
   position: absolute;
   top: 20px;
@@ -2051,4 +2057,32 @@ body {
 
 .move_imgs {
   display: none;
+}
+
+.cat_fishing_box {
+  position: absolute;
+  top: 15%;
+  height: 100%;
+  width: 100%;
+}
+
+.cat_fishing_box .tree_cat {
+  width: 78%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.cat_fishing_box .rod {
+  width: 28%;
+  position: absolute;
+  top: 8.2%;
+  left: 23%;
+}
+
+.cat_fishing_box .net {
+  width: 15%;
+  position: absolute;
+  top: 6%;
+  left: 50%;
 }
