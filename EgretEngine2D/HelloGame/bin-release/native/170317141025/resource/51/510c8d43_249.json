@@ -1,0 +1,20 @@
+{
+	"groups": [
+		{
+			"name": "preload",
+			"keys": "bgImage,ddd"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/test.jpg",
+			"type": "image",
+			"name": "bgImage"
+		},
+		{
+			"url": "assets/ddd.json",
+			"name": "ddd",
+			"type": "sheet"
+		}		
+	]
+}

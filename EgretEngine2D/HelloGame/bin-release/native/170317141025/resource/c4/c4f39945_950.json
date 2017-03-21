@@ -1,0 +1,11 @@
+{"file":"ddd.png","frames":{
+"1_png":{"x":826,"y":328,"w":160,"h":226,"offX":0,"offY":0,"sourceW":160,"sourceH":226},
+"2_png":{"x":340,"y":708,"w":160,"h":226,"offX":0,"offY":0,"sourceW":160,"sourceH":226},
+"3_png":{"x":176,"y":744,"w":160,"h":226,"offX":0,"offY":0,"sourceW":160,"sourceH":226},
+"loveMan_png":{"x":2,"y":2,"w":632,"h":412,"offX":0,"offY":0,"sourceW":632,"sourceH":412},
+"woman_png":{"x":2,"y":744,"w":170,"h":236,"offX":0,"offY":0,"sourceW":170,"sourceH":236},
+"calf_png":{"x":826,"y":558,"w":168,"h":208,"offX":2,"offY":0,"sourceW":170,"sourceH":208},
+"embrace_png":{"x":618,"y":418,"w":204,"h":354,"offX":0,"offY":0,"sourceW":204,"sourceH":354},
+"home_png":{"x":328,"y":418,"w":286,"h":286,"offX":0,"offY":0,"sourceW":286,"sourceH":286},
+"left_png":{"x":638,"y":2,"w":320,"h":322,"offX":0,"offY":0,"sourceW":320,"sourceH":322},
+"left_bg_png":{"x":2,"y":418,"w":322,"h":322,"offX":0,"offY":0,"sourceW":322,"sourceH":322}}}

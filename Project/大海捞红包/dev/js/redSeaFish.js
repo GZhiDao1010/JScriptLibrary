@@ -191,13 +191,15 @@ redSeaFish.timeOut = function(){ //30秒倒计时结束执行方法
 	alert('方法名：redSeaFish.timeOut()')
 }
 
-redSeaFish.test007 = 123;
+
 redSeaFishPlayGame = {
 		_this:this.redSeaFish,
 		ratios:[134/167,222/59,519/189], //小船、星星、漂流瓶图片的比例
 		size:[0.20,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2], //缩放图片比例
 		num:0,
 		moveImgs:$('.move_imgs'),
+		fishingImgs:$('.fishing'),
+		catFishingBox:$('#catFishingBox'),
 		gameCanvace:document.getElementById("gameWorkPlace").getContext("2d"),   //漂流画布
 		//catFishingCanvas:document.getElementById('catFishing').getContext('2d'),//黑猫捞红包画布
 		activeRange:{//活动范围的宽，高
@@ -213,73 +215,128 @@ redSeaFishPlayGame = {
 			})
 		},
 		treeCatStyle:function(){ //初始化树猫渔网图片
+			return;
+			var o ={},rodDefaultXY,netDefaultXY,_w = $(window).width(),
+			_h = $(window).height();
 			if($(window).height() < 490){
+				rodDefaultXY = {
+						x:_w * 0.23,
+						y:_h * 0.25
+				}
+				netDefaultXY = {
+						x:_w * 0.5,
+						y:_h * 0.23
+				}
 				$('#rod').css({
-					"top":'10%',
+					"top":'25%',
 				})
 				$('#net').css({
-					"top":'8%',
+					"top":'23%',
 				})
+			}else{
+				rodDefaultXY = {
+						x:_w * 0.23,
+						y:_h * 0.232
+				}
+				netDefaultXY = {
+						x:_w * 0.5,
+						y:_h * 0.21
+				}
 			}
+			o.rod = rodDefaultXY;
+			o.net = netDefaultXY;
+			return o
 			
 		},
-		touchstart:function(){ //手指触摸事件
-			console.log('手指触摸事件')
-			var net  = document.querySelectorAll('.net');
-			var netXY = {
-					x:net[0].x,
-					y:net[0].y,
+		rod:function(){
+			return;
+			var _this = this,
+			_catFishingCanvas =  _this.catFishingCanvas,
+			msg = {
+					width:180,
+					height:200,
+					vx:10,
+					vy:10,
+					areay:109,
+					option:0
+			},
+			rodImg = new Image();
+			rodImg.src = '../img/rod.png';
+			rodImg.addEventListener('load',imgin);
+			function imgin(){
+				_catFishingCanvas.width = rodImg.width;
+				_catFishingCanvas.height = rodImg.height;
+				//_catFishingCanvas.scale(0.5,0.2);
+				_catFishingCanvas.clearRect(0,0,_catFishingCanvas.width,_catFishingCanvas.height);
+				_catFishingCanvas.drawImage(rodImg,0,0,_catFishingCanvas.width*0.5,_catFishingCanvas.height*0.5);
+				//_catFishingCanvas.style.width  = '100%';
 			}
-			var num = 0;
-			console.log(netXY)
-		    
+		},
+		touchstartNoRepeat:true,
+		touchstart:function(){ //手指触摸事件
+			if(!this.touchstartNoRepeat){
+				return;
+			}
+			var _this = this;
+			var network = $('#network');
+			console.log(network)
+			var num =0;
+			var ww = $(window).width();
+			function rodAndNet(){ //鱼竿旋转
+				var x = ww * 0.26 + 'px';
+				var y = ww * 0.19 + 'px';
+				console.log(y+'****'+x)
+				var num2=0; 
+				var rodAndNetSelf = setInterval(function(){
+					num2++;
+					$('.rodAndNet').css({
+						"transform": 'rotate('+num2*0.3+'deg)', //向下旋转
+				    	"transform-origin": ' '+x+' '+y+' ', //旋转的中心位置
+					})
+					if(num2*0.3 > 70){
+						//rotateLargetWidth();
+					}
+					if(num2*0.3 > 110){ // >110时，停止旋转
+						_this.getCanvasMsg(); //分析是否捞到红包...
+						clearInterval(rodAndNetSelf)
+					}
+				},5)
+			}
+			function rotateLargetWidth(){ //拉长
+				var self =  setInterval(function(){
+					num++;
+					var w = 27 + num*0.199 ;
+					if(w >= 61.8){
+						_this.netRotate(); //渔网旋转
+						rodAndNet(); //鱼竿旋转
+						clearInterval(self) //停止鱼竿拉长
+					}
+					$('.rod').css({
+						"width": w + '%', 
+					})
+					var nt = 55 + num*-0.2 + '%';
+					var nl = 50 + num*0.2 + '%';
+					$('.cat_fishing_box .net').css({
+						"top": nt,
+				    	"left": nl
+					})
+				},5)
+			}
+			rotateLargetWidth();
+			console.log('手指触摸事件')
+		},
+		netRotate:function(){ //渔网旋转
+			var ww = $(window).width()*0.828 + 'px';
+			var wh = $('.rodAndNet').height() * 0.20  + 'px';
+			$('.net img').css({
+				"transform": 'rotateX(-175deg)', //向下旋转
+		    	"transform-origin":'0px '+wh+' 0px', //旋转的中心位置
+			})
 		},
 		touchend:function(){ //手指离开屏幕事件
+			this.touchstartNoRepeat = false; //禁止点击再次触发touchstart事件
 			console.log('手指离开屏幕事件')
 		},
-//		catFishingImgUrl:{
-//			treeCat:'../img/treeCat.png',//树猫
-//			rod:'../img/rod.png',//鱼竿
-//			net:'../img/net.png' // 鱼网
-//		},
-//		catFishingImg:function(){ //树猫,鱼竿,鱼网存入img
-//			return imgList = {
-//				treeCat:document.getElementById('tree_cat'),
-//				rod:document.getElementById('rod'),
-//				net:document.getElementById('net')
-//			}
-//			 
-//		},
-//		putCatFisingIntoCanvas:function(){ //将树猫,鱼竿,鱼网映射到catFishing画布上
-//			return;
-//			var _this =this,
-//				_catFishingCanvas = _this.catFishingCanvas,
-//				_catFishing = _this.catFishingImg(),
-//				zoom=1,
-//				treeCatHW = {
-//					h:_catFishing.treeCat.height*zoom,
-//					w:_catFishing.treeCat.width*zoom
-//				},
-//				rodtHW = {
-//					h:_catFishing.rod.height*zoom,
-//					w:_catFishing.rod.width*zoom
-//				},
-//				netHW = {
-//					h:_catFishing.net.height*zoom,
-//					w:_catFishing.net.width*zoom
-//				};
-//			console.log(treeCatHW)
-//			_catFishingCanvas.scale(0.3,0.3)
-//			_catFishingCanvas.drawImage(
-//					_catFishing.treeCat,
-//					0,0,
-//					treeCatHW.w,treeCatHW.h,
-//					0,0,
-//					treeCatHW.w*0.6,treeCatHW.h*0.3
-//			)
-//			_catFishingCanvas.restore();  
-//			
-//		},
 		heighEqual:function(){ //根据高度调整漂流礼物的高度间隔
 			var equal=0;
 			var wheight = $(window).height();
@@ -378,138 +435,45 @@ redSeaFishPlayGame = {
 				console.log('停止')
 			},_t.gameTime * _t.density)
 		},
-		stopGame:function(){
+		stopGame:function(){ //暂停游戏
 			this.switchGame = false;
 		},
-		againGame:function(){
+		againGame:function(){ //再玩一次
 			this.switchGame = true;
 		},
-		getCanvasMsg:function(){//获得画布上指定坐标上图片信息
-			var canvasImg  = this.gameCanvace.getImageData(10,10,50,50);
-			var n=0;
-			var red=0,green=0,blue=0,alpha=0;
-			var _data = canvasImg.data;
-			for(var i=0;i<_data.length;i+=4){
-				n+=parseInt(canvasImg.data[i]);
-				red+= parseInt( _data[i]);
-				green+= parseInt(_data[i+1]);
-				blue+= parseInt(_data[i+2]);
-				alpha+= parseInt(_data[i+3]);
+		getCanvasMsg:function(){//获得画布上指定坐标上图片信息 ,判断是否捞到红包
+			var gameWorkPlace = $('#gameWorkPlace');
+			var placeWidth = gameWorkPlace.width();
+			var placeheight = gameWorkPlace.height();
+			var average = 5;
+			var axis = [
+			       {x:0,y:placeheight/average},
+			       {x:placeWidth/average,y:placeheight/average*2},
+			       {x:placeWidth/average*2,y:placeheight/average*0},
+			      
+			   ]
+			console.log(axis);
+			for(var i=0;i<axis.length;i++){
+				var canvasImg  = this.gameCanvace.getImageData(axis[i].x,axis[i].y,placeWidth/4,placeheight/4);
+				var n=0;
+				var red=0,green=0,blue=0,alpha=0;
+				var _data = canvasImg.data;
+				for(var i=0;i<_data.length;i+=4){
+					n+=parseInt(canvasImg.data[i]);
+					red+= parseInt( _data[i]);
+					green+= parseInt(_data[i+1]);
+					blue+= parseInt(_data[i+2]);
+					alpha+= parseInt(_data[i+3]);
+				}
+				if(red > 80000 && blue > 80000){
+					console.log('捞到红包')
+				}
+				console.log(red)
+				console.log('没捞到哦....')
 			}
-			if(red > 80000 && blue > 80000){
-				
-				console.log('捞到红包')
-			}
-			//var getCanvasImg = document.getElementById('getCanvasImg').getContext('2d')
-			//getCanvasImg.putImageData(canvasImg,0,0) ;//画布上还原canvasImg图片
 		}
-		
 }
-redSeaFish.staticGame = function(){ //静态动画
-	var _this =this;
-	this.canvasHeight(); //初始化画布高宽
-	
-	var ratios = [134/167,222/59,519/189]; //小船、星星、漂流瓶图片的比例
-	var size = [0.25,0.25,0.25]; //缩放图片比例
-	var moveImgs = $('.move_imgs'); //所用移动图片集合
-	var moveImgGroup = [moveImgs[0],moveImgs[1],moveImgs[2]] //小船、星星、漂流瓶图片标签
-	var moveImgObj = [ //图片显示的高宽
-	    {width:moveImgGroup[0].width*size[0],height:moveImgGroup[0].height*size[0]},
-	    {width:moveImgGroup[1].width*size[1],height:moveImgGroup[1].height*size[1]},
-	    {width:moveImgGroup[2].width*size[2],height:moveImgGroup[2].height*size[2]},
-	    ]
-	var activeRange = { //活动范围的宽，高
-			width:$(window).width(),
-			height:$(window).height()*0.35
-	}
-	
-	var randomImgs = function(){ //随机获得一组图片的集合
-		var array = 	[moveImgs[0],moveImgs[1],moveImgs[2]];
-		for(var i=array.length - 1;i > 0;i--){
-			var j = Math.floor(Math.random() * (i+1));
-			var temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-		}
-		return array;
-	}
-	var randomImgsGroup = randomImgs();
-	var randomHeights = function(array){ //图片集合中图片的高度
-		var g=[];
-		for(var i=0;i<array.length;i++){
-			var name = array[i].alt;
-			if(name == '小船'){
-				console.log(name)
-				g.push(array[i].height*size[0])
-			}
-			if(name == '星星'){
-				console.log(name)
-				g.push(array[i].height*size[1])
-			}
-			if(name == '瓶子'){
-				console.log(name)
-				g.push(array[i].height*size[2])
-			}
-		}
-		return g;
-	}
-	var randowHeightsGroup = randomHeights(randomImgsGroup);
-	var axisY = function(array){ //根据图片的高度，生成Y轴上不重叠的图片坐标(x,y)
-		var activeRangeHeight = activeRange.height;//画布的高度
-		var n=0;
-		console.log(array)
-		console.log('activeRangeHeight=='+activeRangeHeight)
-		for(var i=0;i<array.length;i++){
-			n+=array[i];
-		}
-		
-		console.log('n==='+n)
-	}
-	console.log(axisY(randowHeightsGroup))
-	
-	var mycv = document.getElementById("gameWorkPlace");   //画布
-	var myctx = mycv.getContext("2d"); //2d
-	var nums = 0;
-	var cleanCanva = function(y){ //清除上一针画面
-		var yz = y-10;
-		myctx.clearRect( yz, randowHeightsGroup[0],randomImgsGroup[0].width*size[0]+10,randomImgsGroup[0].height*size[0]+10)
-		myctx.clearRect( yz, randowHeightsGroup[1],randomImgsGroup[1].width*size[1]+10,randomImgsGroup[1].height*size[1]+10)
-		myctx.clearRect( yz, randowHeightsGroup[2],randomImgsGroup[2].width*size[2]+10,randomImgsGroup[2].height*size[2]+10)
-		
-		myctx.clearRect( yz+20, randowHeightsGroup[0]+20,randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
-		myctx.clearRect( yz+20, randowHeightsGroup[1]+20,randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
-		myctx.clearRect( yz+20, randowHeightsGroup[2]+20,randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
-		
-		myctx.clearRect( yz+60, randowHeightsGroup[0]+60,randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
-		myctx.clearRect( yz+60, randowHeightsGroup[1]+60,randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
-		myctx.clearRect( yz+60, randowHeightsGroup[2]+60,randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
-	}
-	var moveFn = function(y){ //移动
-		myctx.drawImage(randomImgsGroup[0], y, randowHeightsGroup[0],randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
-		myctx.drawImage(randomImgsGroup[1], y, randowHeightsGroup[1],randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
-		myctx.drawImage(randomImgsGroup[2], y, randowHeightsGroup[2],randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
-		
-		myctx.drawImage(randomImgsGroup[0], y+20, randowHeightsGroup[0]+20,randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
-		myctx.drawImage(randomImgsGroup[1], y+20, randowHeightsGroup[1]+20,randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
-		myctx.drawImage(randomImgsGroup[2], y+20, randowHeightsGroup[2]+20,randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
-		
-		myctx.drawImage(randomImgsGroup[0], y+60, randowHeightsGroup[0]+60,randomImgsGroup[0].width*size[0],randomImgsGroup[0].height*size[0]);
-		myctx.drawImage(randomImgsGroup[1], y+60, randowHeightsGroup[1]+60,randomImgsGroup[1].width*size[1],randomImgsGroup[1].height*size[1]);
-		myctx.drawImage(randomImgsGroup[2], y+60, randowHeightsGroup[2]+60,randomImgsGroup[2].width*size[2],randomImgsGroup[2].height*size[2]);
-	}
-	setInterval(function(){
-		console.log()
-		if(nums > activeRange.width){
-			nums = 0;
-			//randomImgs();
-		}else{
-			cleanCanva(nums);
-			moveFn(nums++);
-		}
-	},1000)
-	
-	
-}
+
 redSeaFish.playGame = function(){ //玩游戏...
 	
 	
@@ -543,14 +507,26 @@ redSeaFish.notWinning = function(){ //未中奖情况
 	'		<section class="popup_cont"  style="background-color:#eb0056;text-align:center;color:#f6ff2e;border-radius:0 0 5px 5px ;font-size:18px;">'+
 	'			<section class="popup_cont_text">'+msg[num].text+'</section>'+
 	'			<img class="popup_erweima" style="width:50%;padding:5px 25%" src="'+msg[num].src+'">'+
-	'			<button class="play_agin" onclick="redSeaFish.playAgainGame()">再玩一次</button>'+
+	'			<button class="play_agin">再玩一次</button>'+
 	'		</section>'+
 	'	</section>'+
 	'</section>';
 	$('body').append(h);
 }
 redSeaFish.playAgainGame = function(){ //再玩一次
-	alert("方法名：redSeaFish.playAgainGame()")
+	var h = '<section class="popup_box" title="弹框背景" style="display:block">'+
+	'	<section class="popup_cont_box" title="弹框内容" style="text-align:center;">'+
+	'		<section class="popup_title_box"style="background-color:#eb0056;text-align:center;height: 15px;border-radius:5px 5px 0 0;">'+
+	'			<a href="javascript:;" onclick="redSeaFish.removPopue()" class="popup_close_btn" id="popupCloseBtn" style="top: -4px; font-size: 29px;">×</a>'+
+	'		</section>'+
+	'		<section class="popup_cont"  style="background-color:#eb0056;min-height: initial;text-align:center;color:#f6ff2e;border-radius:0 0 5px 5px ;font-size:18px;">'+
+	'			<section class="popup_cont_text" style="margin: 50px 0;">加把劲哟！我准备好红包，你储备好力气！</section>'+
+	'			<button class="play_agin">再玩一次(2)</button>'+
+	'			<button class="play_agin">兑换奖品</button>'+
+	'		</section>'+
+	'	</section>'+
+	'</section>';
+	$('body').append(h);
 }
 redSeaFish.getWinning = function(){ //中奖显示
 	var ishas = $(document).find('.popup_box').length;

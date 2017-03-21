@@ -2061,28 +2061,46 @@ body {
 
 .cat_fishing_box {
   position: absolute;
-  top: 15%;
+  top: 25%;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .cat_fishing_box .tree_cat {
   width: 78%;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -4px;
+  left: 4px;
+  z-index: -1;
+}
+
+.cat_fishing_box .rodAndNet {
+  border: 1px solid rgba(0, 0, 0, 0);
+  position: relative;
 }
 
 .cat_fishing_box .rod {
-  width: 28%;
-  position: absolute;
-  top: 8.2%;
-  left: 23%;
+  width: 25%;
+  height: 1px;
+  border-radius: 5px;
+  outline: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.6);
+  transform-origin: 0 36px;
+  transform: rotate(-10.5deg);
+  margin-left: 26%;
+  margin-top: 19%;
 }
 
 .cat_fishing_box .net {
-  width: 15%;
   position: absolute;
-  top: 6%;
-  left: 50%;
+  width: 15%;
+  top: 55%;
+  left: 49%;
+  transform: rotate(0deg);
+}
+
+.cat_fishing_box .net .netImage {
+  width: 100%;
 }

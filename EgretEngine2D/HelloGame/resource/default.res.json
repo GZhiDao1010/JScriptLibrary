@@ -1,0 +1,26 @@
+{
+	"groups": [
+		{
+			"keys": "BG,music_png,ball_json",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/bg.png",
+			"type": "image",
+			"name": "BG"
+		},
+		{
+			"url": "assets/music.png",
+			"type": "image",
+			"name": "music_png"
+		},
+		{
+			"name": "ball_json",
+			"type": "sheet",
+			"url": "assets/ball.json",
+			"subkeys": "s2_png,s1_png,s3_png,s4_png,ball_png"
+		}
+	]
+}

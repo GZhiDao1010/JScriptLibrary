@@ -21,22 +21,31 @@
 <section class="left_timer" id="leftTime" title="倒数计时">
 	<span id="sec">00</span> 秒
 </section>
+
 <!-- <button onclick="redSeaFishPlayGame.getCanvasMsg();">canvas</button> -->
 <canvas id="gameWorkPlace" class="game_work_place" title="游戏画布"></canvas>
-<!-- <canvas id="catFishing" title="黑猫捞红包" style="border:1px solid red;position:absolute;box-sizing: border-box;"></canvas>
- -->
- <div class="cat_fishing_box" id="catFishingBox">
+
+<div class="cat_fishing_box" id="catFishingBox">
+	
 	<img alt="树/猫" id="tree_cat" class="tree_cat" src="../img/treeCat.png">
-	<img alt="鱼竿" id="rod" class="rod" src="../img/rod.png">
-	<img alt="渔网" id="net" class="net" src="../img/net.png">
+	<div class="rodAndNet">
+		<div class="rod" id="rod" title="鱼竿"></div>
+		<div class="net" id="net"  alt="渔网">
+			<img alt="渔网" class="netImage" src="../img/net.png">
+		</div>
+		
+	</div>
+
+	<!-- <div id="network" >
+		<img alt="鱼竿" id="rod"  class="rod fishing" src="../img/rod.png">
+		<img alt="渔网" id="net"  class="net fishing" src="../img/net.png">
+	</div> -->
 </div>
  
-<!-- <canvas id="getCanvasImg" style="border:1px solid red;width:50px;height:50px;margin:50px;" title="获得画布上指定坐标的图片信息"></canvas>
- -->
 <div style="display:none" title="黑猫捞礼物">
-	<img alt="树/猫" id="tree_cat" src="../img/treeCat.png">
+	<!-- <img alt="树/猫" id="tree_cat" src="../img/treeCat.png">
 	<img alt="星星" id="rod" src="../img/stars.png">
-	<img alt="瓶子" id="net" src="../img/bottle.png">
+	<img alt="瓶子" id="net" src="../img/bottle.png"> -->
 </div>
 
 <div style="display:none" title="漂流的礼物">
@@ -47,9 +56,11 @@
 <script src="../js/jquery-2.2.2.min.js"></script>
 <script src="../js/redSeaFish.js"></script>
 <script>
+
 window.onload =function(){
 	redSeaFishPlayGame.treeCatStyle();
 	redSeaFishPlayGame.beginGame();
+	
 	
 }
 $(function(){
